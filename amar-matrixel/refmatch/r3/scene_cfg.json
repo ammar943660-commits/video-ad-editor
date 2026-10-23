@@ -1,6 +1,6 @@
 {
  "font": "/home/user/video-ad-editor/amar-matrixel/refmatch/fonts_tmp/baloo-bhaijaan-2.ttf",
- "sun_energy": 1.5,
+ "sun_energy": 1.4,
  "sun_angle": 4,
  "sun_color": [
   1.0,
@@ -17,13 +17,13 @@
   0.62,
   0.72
  ],
- "sky_strength": 0.18,
+ "sky_strength": 0.35,
  "concrete": [
-  0.42,
-  0.42,
-  0.41
+  0.32,
+  0.32,
+  0.31
  ],
- "bump": 0.4,
+ "bump": 0.6,
  "noise_scale": 10,
  "bevel": 0.012,
  "beats": [
@@ -60,9 +60,44 @@
     ]
    },
    "depth_m": 1.5,
-   "shapes": "/tmp/claude-0/-home-user-video-ad-editor/bbe43814-7d6f-54fe-bdc9-fbc17ff8515d/scratchpad/R3work/g1_shapes.json",
+   "shapes": "/tmp/claude-0/-home-user-video-ad-editor/bbe43814-7d6f-54fe-bdc9-fbc17ff8515d/scratchpad/R3work/p1_shapes.json",
    "bevel_m": 0.09
   }
  ],
- "n_puffs": 0
+ "n_puffs": 0,
+ "billow": {
+  "n": 40,
+  "color": [
+   0.97,
+   0.9,
+   0.8
+  ],
+  "edge": 0.5,
+  "v0": -10,
+  "v1": -0.5,
+  "z0": 0.4,
+  "z1": 2.2,
+  "r0": 2.0,
+  "r1": 3.8,
+  "seed": 5,
+  "disp": 0.28,
+  "mode": "volume",
+  "density": 1.6,
+  "noise": 1.6,
+  "bounces": 3,
+  "extra": [
+   {
+    "n": 14,
+    "u0": 0.05,
+    "u1": 0.8,
+    "v0": 0.0,
+    "v1": 6,
+    "z0": 6,
+    "z1": 13,
+    "r0": 3,
+    "r1": 5,
+    "density": 0.9
+   }
+  ]
+ }
 }

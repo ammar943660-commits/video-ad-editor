@@ -4,7 +4,7 @@
 import sys,os,json,math
 sys.path.insert(0,os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
 from bl_common import *
-import numpy as np
+import numpy as np, random
 W=sys.argv[1]; fi=int(sys.argv[2]); out=sys.argv[3] if len(sys.argv)>3 else f'{W}/render_{fi}.png'; samples=int(sys.argv[4]) if len(sys.argv)>4 else 48
 CAM=json.load(open(f"{W}/{os.environ.get('AMX_CAM','camera.json')}")); cfg=json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'scene_cfg.json')))
 def cam_matrix(fr):
@@ -51,4 +51,13 @@ if __name__=='__main__':
     import random; rnd=random.Random(3); dm=dust_material(density=cfg.get('dust_density',2.2),noise_scale=cfg.get('dust_noise',1.4))
     for k in range(cfg.get('n_puffs',26)):
         x=rnd.uniform(-16,18); y=rnd.uniform(-9,3)+ (x*0.0); z=rnd.uniform(1.0,5.5); r=rnd.uniform(3.5,7.5); add_puff((x,y,z),r,dm,squash=rnd.uniform(0.7,1.0),rot=rnd.random()*6)
+    if cfg.get('billow'):
+        B0=cfg['billow']; pl=cfg['beats'][0]['plane']; BL=np.array(pl['BL'][:2]); yaw=pl['baseline_yaw']; ux=np.array([math.cos(yaw),math.sin(yaw)]); nx=np.array([-math.sin(yaw),math.cos(yaw)])
+        for gi,B in enumerate([B0]+[dict(B0,**e) for e in B0.get('extra',[])]):
+            vol=B.get('mode')=='volume'; bm=dust_material(color=tuple(B['color']),density=B.get('density',2.0),noise_scale=B.get('noise',1.5),seed=gi*3.7) if vol else billow_material(color=tuple(B['color']),edge=B.get('edge',0.55))
+            r2=random.Random(B.get('seed',5)+gi)
+            for k in range(B['n']):
+                u=r2.uniform(B.get('u0',-0.02),B.get('u1',1.02))*pl['width_m']; v=r2.uniform(B['v0'],B['v1']); z=r2.uniform(B['z0'],B['z1']); r=r2.uniform(B['r0'],B['r1'])
+                xy=BL+ux*u+nx*v; (add_puff((xy[0],xy[1],z),r,bm,squash=r2.uniform(0.7,1.0),rot=r2.random()*6) if vol else add_billow((xy[0],xy[1],z),r,bm,seed=k,disp=B.get('disp',0.55)))
+    sc.cycles.volume_bounces=B.get('bounces',3) if cfg.get('billow') else 0; sc.cycles.volume_step_rate=2.0; sc.cycles.volume_preview_step_rate=2.0; sc.cycles.volume_max_steps=64
     sc.render.filepath=out; bpy.ops.render.render(write_still=True); print('rendered',out)

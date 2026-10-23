@@ -82,3 +82,23 @@ def shapes_object(shapes_json, depth=1.6, bevel=0.05, smooth=0.03, name='TXT_TRA
             sp=cu.splines.new('POLY'); sp.points.add(len(ring)-1); sp.use_cyclic_u=True
             for pt,(x,y) in zip(sp.points,ring): pt.co=(x,y,0,1)
     ob=bpy.data.objects.new(name,cu); bpy.context.scene.collection.objects.link(ob); return ob
+
+def billow_material(name='BILLOW', color=(0.80,0.72,0.62), edge=0.55, noise_scale=3.0):
+    """غبار سطحي «قرنبيط» (بدل الحجم): ديفيوز فاتح مع شفافية ناعمة عند الحواف (Layer Weight) وتدرّج ضوضاء. أسرع بكثير من الحجم."""
+    m=bpy.data.materials.new(name); m.use_nodes=True; nt=m.node_tree; nt.nodes.clear(); L=nt.links
+    out=nt.nodes.new('ShaderNodeOutputMaterial'); mixs=nt.nodes.new('ShaderNodeMixShader'); tr=nt.nodes.new('ShaderNodeBsdfTransparent'); df=nt.nodes.new('ShaderNodeBsdfDiffuse')
+    lw=nt.nodes.new('ShaderNodeLayerWeight'); lw.inputs['Blend'].default_value=edge
+    tc=nt.nodes.new('ShaderNodeTexCoord'); n1=nt.nodes.new('ShaderNodeTexNoise'); n1.inputs['Scale'].default_value=noise_scale; n1.inputs['Detail'].default_value=8
+    ramp=nt.nodes.new('ShaderNodeValToRGB'); ramp.color_ramp.elements[0].color=(color[0]*.55,color[1]*.52,color[2]*.48,1); ramp.color_ramp.elements[1].color=color+(1,)
+    mr=nt.nodes.new('ShaderNodeMapRange'); mr.inputs[1].default_value=0.25; mr.inputs[2].default_value=0.9; mr.inputs[3].default_value=0.0; mr.inputs[4].default_value=1.0; mr.clamp=True
+    L.new(tc.outputs['Object'],n1.inputs['Vector']); L.new(n1.outputs['Fac'],ramp.inputs['Fac']); L.new(ramp.outputs['Color'],df.inputs['Color'])
+    L.new(lw.outputs['Facing'],mr.inputs['Value']); L.new(mr.outputs['Result'],mixs.inputs['Fac'])   # facing=1 في المنتصف → 0 شفافية؛ الحواف → 1
+    L.new(df.outputs['BSDF'],mixs.inputs[1]); L.new(tr.outputs['BSDF'],mixs.inputs[2]); L.new(mixs.outputs['Shader'],out.inputs['Surface']); return m
+
+def add_billow(center, radius, mat, seed=0, subdiv=4, disp=0.55, tex_scale=2.4, squash=0.85):
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdiv,radius=1.0,location=center); ob=bpy.context.object; ob.scale=(radius,radius,radius*squash)
+    tx=bpy.data.textures.new('bt%d'%seed,'CLOUDS'); tx.noise_scale=1.0/tex_scale; tx.noise_depth=4; 
+    md=ob.modifiers.new('d','DISPLACE'); md.texture=tx; md.strength=disp; md.mid_level=0.4
+    ob.rotation_euler=(seed*0.7,seed*1.3,seed*2.1); ob.data.materials.append(mat)
+    for p in ob.data.polygons: p.use_smooth=True
+    return ob
