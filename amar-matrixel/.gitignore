@@ -17,3 +17,4 @@ projects/*/*/export/
 !previews/camera/*.mp4
 !projects/matrix/plate_*/plate.mp4
 previews/camera/_*
+refmatch/fonts_tmp/
