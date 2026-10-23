@@ -1,0 +1,54 @@
+   [stone bbox @hold] (229, 743, 681, 307) frame 63
+── QA stone_text_916  [STONE_TEXT_REVEAL] 9:16 ──
+  · aspect_ok                             1            (عتبة max None) 1080×1920
+  · track_flagged_frames_pct            0.0 %          (عتبة max None) 
+  ✓ track_err_mean_pct               0.1637 % of W     (عتبة max 0.5) متوسط 1.77px — أقصى 2.69px
+  · track_err_max_pct                0.2487 % of W     (عتبة max None) 
+  ✓ track_jitter_px_rel_pct          0.0036 % of W     (عتبة max 0.05) اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.038px
+  · track_drift_px                   0.9804 px         (عتبة max None) نمو الخطأ بين بداية ونهاية المقطع
+  · ocr_silhouette[أرض للبيع]        0.7143            (عتبة max None) OCR «رضليدع»
+  · ocr_composite[أرض للبيع]         0.2667            (عتبة max None) OCR «بإيجهةن»
+  · ocr_rectified[أرض للبيع]            0.5            (عتبة max None) OCR «ايشلنبيع» (الشكل بعد إزالة المنظور)
+  ✓ ocr_similarity                   0.7143            (عتبة min 0.5) أعلى تشابه OCR بين (ظلّية، مركّب، معدّل المنظور)
+  ✓ text_height_pct                  6.9366 % of H     (عتبة min 3.5) ارتفاع النص على الشاشة وقت الثبات
+  ✓ stroke_rel_pct                   2.7893 % of W     (عتبة min 0.45) سمك الخط التقديري
+  ✓ floating_alpha_pct                    0 %          (عتبة max 1.5) أسوأ نسبة ألفا خارج الحجم المسموح (نص+غبار+حطام)
+  · shadow_present                    29437 px         (عتبة max None) بكسلات الظل شبه الشفافة الداكنة
+  ✓ perspective_err_pct              0.1353 % of W     (عتبة max 0.8) متوسط 1.46px أقصى 3.01px
+  ✓ contact_err_pct                  0.0406 % of W     (عتبة max 1.5) متوسط 0.44px أقصى 0.65px
+  ✓ safe_zone_violations                  0 boxes      (عتبة max 0) المنطقة الآمنة 9:16: x 5%-95%, y 6%-82%
+  ⇒ الحكم: pass
+
+── QA land_hologram_916  [LAND_HOLOGRAM_SEQUENCE] 9:16 ──
+  · aspect_ok                             1            (عتبة max None) 1080×1920
+  · track_flagged_frames_pct            0.0 %          (عتبة max None) 
+  ✓ track_err_mean_pct               0.1637 % of W     (عتبة max 0.5) متوسط 1.77px — أقصى 2.69px
+  · track_err_max_pct                0.2487 % of W     (عتبة max None) 
+  ✓ track_jitter_px_rel_pct          0.0036 % of W     (عتبة max 0.05) اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.038px
+  · track_drift_px                   0.9804 px         (عتبة max None) نمو الخطأ بين بداية ونهاية المقطع
+  ✓ policy_violations                     0            (عتبة max 0) قواعد الصدق: المساحة/المخطط/المبنى المعتمد — سليمة
+  ✓ outline_to_gt_pct                0.2263 % of W     (عتبة max 0.7) الخط المرسوم مقابل حدود الأرض الحقيقية: 2.44px
+  ✓ perspective_err_pct              0.1628 % of W     (عتبة max 0.8) متوسط 1.76px أقصى 3.61px
+  ✓ ocr_similarity                   0.8889            (عتبة min 0.5) قراءة المساحة بعد إزالة المنظور: «2000م» (المتوقع 2000)
+  ✓ safe_zone_violations                  0 boxes      (عتبة max 0) المنطقة الآمنة 9:16: x 5%-95%, y 6%-82%
+  ⇒ الحكم: pass
+
+── QA building_outline_916  [DIGITAL_BUILDING_OUTLINE] 9:16 ──
+  · aspect_ok                             1            (عتبة max None) 1080×1920
+  · track_flagged_frames_pct            0.0 %          (عتبة max None) 
+  ✓ track_err_mean_pct               0.1812 % of W     (عتبة max 0.5) متوسط 1.96px — أقصى 6.38px
+  · track_err_max_pct                0.5911 % of W     (عتبة max None) 
+  ✓ track_jitter_px_rel_pct          0.0176 % of W     (عتبة max 0.05) اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.190px
+  · track_drift_px                   0.8004 px         (عتبة max None) نمو الخطأ بين بداية ونهاية المقطع
+  ✓ line_slip_pct                    0.0923 % of W     (عتبة max 0.6) انزلاق الخطوط عن الواجهة الحقيقية: متوسط 1.00px أقصى 3.93px
+  · edge_recall                         0.8            (عتبة max None) نسبة الحواف الأفقية الحقيقية المكتشفة
+  · edge_precision                    0.625            (عتبة max None) نسبة الحواف المكتشفة التي تطابق حافة حقيقية
+  ✓ card_jitter_px                   0.1288 px         (عتبة max 0.5) اهتزاز مواضع البطاقات (فرق ثانٍ)
+  ✓ card_overlap                          0 frames×pairs (عتبة max 0) تداخل البطاقات
+  · ocr[فيلا للبيع]                     0.0            (عتبة max None) «»
+  · ocr[جدة]                         0.8571            (عتبة max None) «جدهة»
+  · ocr[تواصل معنا]                  0.9412            (عتبة max None) «واصلمعنا»
+  ✗ ocr_similarity                   0.5994            (عتبة min 0.6) متوسط وضوح البطاقات (OCR عربي)
+  ✓ safe_zone_violations                  0 boxes      (عتبة max 0) المنطقة الآمنة 9:16: x 5%-95%, y 6%-82%
+  ⇒ الحكم: reject — نص البطاقات غير مقروء
+

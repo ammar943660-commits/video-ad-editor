@@ -1,0 +1,60 @@
+{
+  "_doc": "نظام الإخراج الذكي — قرارات إخراجية + بوابات جودة قابلة للقياس. tools/director.py يفحص المشروع قبل الريندر (preflight) وtools/qa.py يفحص النتيجة بعده ويطبّق reject_if.",
+  "STONE_TEXT_REVEAL": {
+    "recipe": "stone_text",
+    "best_scenes": ["أرض فضاء/قطعة بناء من الأعلى (طائرة درون بزاوية 35–65°)", "لقطة ثابتة أو حركة بطيئة للكاميرا", "سطح أرضي مسطح ظاهر بوضوح (رمل/تراب/أسفلت)"],
+    "avoid_scenes": ["أرض منحدرة أو بها عوائق كبيرة وسط مكان النص", "لقطات whip-pan أو اهتزاز يدوي شديد", "أرض مغطاة بالعشب الكثيف (الغبار والحجر لا ينسجمان)", "لقطات ليلية بلا إضاءة (الظل لن يتطابق)"],
+    "duration_s": { "total": [3.0, 6.0], "rise": [1.0, 1.8], "hold": [1.2, 2.5], "sink": [0.6, 1.0] },
+    "camera": { "preferred": "درون عالٍ مع Rise/Tilt بطيء أو لقطة ثابتة", "fov_deg": [40, 65], "perspective": "مستوى الأرض يُحلّ من 4 زوايا قطعة الأرض؛ يواجه النص كاميرا الفريم الأول؛ ارتفاع كاميرا ≥ 25° فوق الأفق", "text_size": "عرض النص 60–85٪ من عرض القطعة؛ ارتفاع النص ≥ 3.5٪ من ارتفاع الإطار" },
+    "lighting": { "match": "اتجاه الشمس من ظلال اللقطة → params.sun_dir؛ لون الشمس دافئ عند الغروب (#ffe2bd) وأبيض عند الظهيرة", "shadow": "ظل مُلقى حقيقي (Shadow Map) + ظل تماس AO يظهر مع الصعود؛ شفافية الظل 0.5–0.7", "ambient": "هيمسفير بنفس لون السماء/الأرض؛ لا emission" },
+    "motion": { "rise_ease": "outCubic: انطلاق قوي وتباطؤ عند القمة", "settle": "اهتزاز مخمّد (≈6Hz، يتلاشى خلال 0.5ث) بسعة ≤ 0.5° — على الجسم لا على الكاميرا", "sink_ease": "inCubic", "dust": "يتركز في ثلثي الصعود ثم انفجار صغير عند الاستقرار؛ يتلاشى خلال 1.5–3ث", "chips": "حطام بباليستيك؛ لا يتجاوز 2ث" },
+    "sfx": ["rumble منخفض أثناء الصعود (40–120Hz)", "thud عند الاستقرار متزامن مع أول فريم ثبات", "تساقط حطام متفرق", "غبار whoosh ناعم"],
+    "blend": { "in": "قطع على لقطة الأرض بعد 0.2–0.4ث من بدء اللقطة لتثبيت التتبع", "out": "غرق النص ثم Dissolve 6–10 فريم أو Cut على الإيقاع للقطة التالية؛ لا تقطع والنص نصف مرتفع", "adjacent": "لقطة سابقة/لاحقة بنفس درجة اللون؛ لا تضع المؤثر مباشرة بعد مؤثر ثقيل آخر" },
+    "quality_gates": { "track_err_mean_pct": 0.5, "track_jitter_px_rel_pct": 0.05, "perspective_err_pct": 0.8, "ocr_similarity": 0.5, "text_height_pct": 3.5, "stroke_rel_pct": 0.45, "floating_alpha_pct": 1.5, "contact_err_pct": 1.5, "safe_zone_violations": 0 },
+    "reject_if": ["track_err_mean_pct", "perspective_err_pct", "floating_alpha_pct", "contact_err_pct", "ocr_similarity"],
+    "reject_reasons": { "track_err_mean_pct": "النص ينزلق عن الأرض", "perspective_err_pct": "منظور النص لا يطابق الأرض", "floating_alpha_pct": "عناصر طافية خارج حجم النص/الغبار", "contact_err_pct": "النص لا يلامس الأرض", "ocr_similarity": "النص العربي غير مقروء" }
+  },
+  "LAND_HOLOGRAM_SEQUENCE": {
+    "recipe": "land_hologram",
+    "best_scenes": ["لقطة جوية لأرض ظاهرة الحدود", "حركة درون بطيئة أو لقطة ثابتة", "إضاءة غروب/ظهيرة تُظهر حواف القطعة"],
+    "avoid_scenes": ["حدود الأرض غير ظاهرة أو محجوبة بمبانٍ/أشجار", "ميل كاميرا < 20° (المستوى متقزّم)", "لقطات بتغيّر منظور سريع جداً"],
+    "duration_s": { "total": [5.0, 9.0], "outline": [0.8, 1.4], "area": [0.5, 1.0], "build": [1.2, 2.0] },
+    "camera": { "preferred": "Rise + Tilt بطيء", "fov_deg": [40, 70], "perspective": "النقاط الأربع تُحدَّد على الفريم الأول وتُعدَّل يدوياً؛ الطول/العرض الحقيقيان يُدخلهما المستخدم (plane_w/plane_l) وإلا تبقى الوحدات نسبية ولا تُعرض مساحة" },
+    "lighting": { "match": "نيون سماوي #19d3ff بتوهّج additive؛ لا ظلال مُلقاة على الأرض للخطوط", "shadow": "المبنى الهولوغرامي شفاف: لا ظل", "ambient": "تعتيم خفيف للقطة (5–10٪) أثناء الظهور يرفع تباين النيون (يُضبط في بريمير)" },
+    "motion": { "outline_ease": "inOutCubic", "head": "رأس مضيء يسبق الخط", "area": "outCubic مع نبض خفيف", "build": "outCubic متتابع (تأخير 0.7 من مدة المبنى بين كل كتلة)" },
+    "sfx": ["zap صاعد مع رسم الحدود", "hum كهربائي منخفض", "blip عند اكتمال الحدود وعند ظهور المساحة", "riser عند صعود المبنى"],
+    "blend": { "in": "ابدأ على اللقطة الخام ثم أظهر الحدود بعد 0.15ث", "out": "اترك الإطار يتلاشى 8 فريم أو قطع على لقطة المبنى الفعلي", "adjacent": "يلي لقطة تعريف الموقع؛ يسبق لقطة المشروع/الواجهة" },
+    "honesty": ["المساحة تظهر فقط من area_m2 يدخلها المستخدم (لا تُحسب من الصورة)", "المخطط يظهر فقط مع plan.approved=true", "المبنى: approved=true+source، وإلا تظهر شارة «تصور مبدئي — غير معتمد» طوال المشهد"],
+    "quality_gates": { "track_err_mean_pct": 0.5, "track_jitter_px_rel_pct": 0.05, "perspective_err_pct": 0.8, "outline_to_gt_pct": 0.7, "ocr_similarity": 0.5, "safe_zone_violations": 0, "policy_violations": 0 },
+    "reject_if": ["track_err_mean_pct", "outline_to_gt_pct", "policy_violations", "perspective_err_pct"],
+    "reject_reasons": { "track_err_mean_pct": "الخط يطفو/ينزلق عن حدود الأرض", "outline_to_gt_pct": "الخط لا يطابق الحدود", "policy_violations": "مخالفة قواعد الصدق (مساحة/مبنى غير معتمد)", "perspective_err_pct": "منظور المجسم خاطئ" }
+  },
+  "DIGITAL_BUILDING_OUTLINE": {
+    "recipe": "building_outline",
+    "best_scenes": ["واجهة مبنى مستوية مواجهة أو بزاوية ≤ 35°", "حركة Push-In أو Orbit خفيفة", "واجهة بتباين واضح (ليل/غروب) لتُبرز النيون"],
+    "avoid_scenes": ["واجهات منحنية أو متعددة الأسطح بدرجة كبيرة (تحتاج planes[])", "حجب كبير بأشجار/أسوار", "زاوية > 50° (الخطوط تتكدس)"],
+    "duration_s": { "total": [3.0, 6.0], "outline": [0.6, 1.2], "major": [1.2, 2.0], "detail": [1.0, 1.8], "cards_each": [0.3, 0.5] },
+    "camera": { "preferred": "Smooth Architectural Push-In", "fov_deg": [35, 70], "perspective": "الواجهة تُعامَل كمستوى؛ الحواف تُكتشف مرة واحدة على الواجهة المعدَّلة وتُتبَّع بحركة المستوى" },
+    "lighting": { "match": "نيون سماوي أو ذهبي حسب هوية العميل", "shadow": "بلا ظلال", "ambient": "تعتيم 10–25٪ للقطة لإبراز التوهج" },
+    "motion": { "draw": "inOutCubic متتابعة من الأسفل للأعلى", "pulse": "نبض ±14٪ بطيء", "cards": "outBack خفيف + رابط للمرساة" },
+    "sfx": ["zap رسم الإطار", "whoosh مع الخطوط الرئيسية", "blips صغيرة للتفاصيل", "blip لكل بطاقة"],
+    "blend": { "in": "ابدأ بعد استقرار حركة الكاميرا بـ0.2ث", "out": "Dissolve خروج 6 فريم أو Match-cut لتفصيل الواجهة", "adjacent": "يتبع لقطة الأرض/الموقع؛ يسبق لقطة داخلية" },
+    "quality_gates": { "track_err_mean_pct": 0.5, "track_jitter_px_rel_pct": 0.05, "line_slip_pct": 0.6, "card_jitter_px": 0.5, "card_overlap": 0, "ocr_similarity": 0.6, "safe_zone_violations": 0 },
+    "reject_if": ["line_slip_pct", "track_err_mean_pct", "card_overlap", "ocr_similarity"],
+    "reject_reasons": { "line_slip_pct": "الخطوط تنزلق عن الواجهة", "track_err_mean_pct": "التتبع غير دقيق", "card_overlap": "بطاقات متداخلة", "ocr_similarity": "نص البطاقات غير مقروء" }
+  },
+  "CINEMATIC_CAMERA_MOTION": {
+    "recipe": "camera_motion",
+    "best_scenes": ["فيديو حقيقي مستقر (يُثبَّت قبل التطبيق)", "صورة ثابتة عالية الدقة (≥ 1.3× حجم الإخراج) للميل/الدفع", "صورة + depth معتمد لـParallax/Rise الحقيقي"],
+    "avoid_scenes": ["صورة منخفضة الدقة (لن تمر فحص Overscan)", "Parallax بلا depth (يُرفض)", "حركة Rise حقيقية من صورة بلا depth (تُوسم محاكاة)"],
+    "duration_s": { "total": [3.0, 6.0], "hold_in": [0.15, 0.4], "hold_out": [0.15, 0.4] },
+    "camera": { "preferred": "Tilt Up للكشف، Push-In 12–18٪ للواجهات، Rise للمشاريع من الأرض للأعلى", "fov_deg": [45, 75], "perspective": "ميل ≤ 12°، تقريب ≤ 1.35×، parallax ≤ 3.5٪ من العرض" },
+    "lighting": { "match": "لا إضاءة جديدة — الحركة هندسية فقط", "shadow": "—", "ambient": "—" },
+    "motion": { "ease": "architect: cubic-bezier(.42,0,.18,1) — بداية ناعمة وتباطؤ طويل", "accel": "تسارع تدريجي، سرعة قصوى عند 40٪، تباطؤ طويل", "no_jerk": "لا قفزات سرعة" },
+    "sfx": ["whoosh ناعم صاعد", "riser خفيف (10–15٪)"],
+    "blend": { "in": "ابدأ الحركة من وضع ثابت 0.25ث", "out": "اترك 0.25ث ثبات قبل القطع، أو قطع على ذروة السرعة مع لقطة تالية بنفس اتجاه الحركة", "adjacent": "اتجاه الحركة يكمل الاتجاه في اللقطة المجاورة" },
+    "quality_gates": { "edge_validity": 1, "overscan_zoom_max": 1.35, "velocity_start_end_pct": 8, "jerk_ok": 1, "stab_improvement_x": 2.0, "aspect_ok": 1 },
+    "reject_if": ["edge_validity", "overscan_zoom_max", "aspect_ok"],
+    "reject_reasons": { "edge_validity": "حواف فارغة/مكررة ظاهرة", "overscan_zoom_max": "المصدر لا يكفي للحركة", "aspect_ok": "نسبة الإخراج خاطئة" }
+  }
+}

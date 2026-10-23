@@ -1,0 +1,32 @@
+{
+ "recipe": "stone_text",
+ "aspect": "4:5",
+ "fps": 30,
+ "duration": 4,
+ "plate": "plate.mp4",
+ "params": {
+  "font": "Tajawal Black",
+  "material": "stone",
+  "sun_dir": [
+   -70,
+   -50,
+   55
+  ],
+  "beats": [
+   {
+    "lines": [
+     "أرض للبيع"
+    ],
+    "t0": 0.3,
+    "rise": 1.2,
+    "hold": 1.2,
+    "sink": 0.7,
+    "size": 0.8,
+    "anchor": [
+     0,
+     0.05
+    ]
+   }
+  ]
+ }
+}

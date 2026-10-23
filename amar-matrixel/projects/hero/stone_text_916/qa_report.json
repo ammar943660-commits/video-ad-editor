@@ -1,0 +1,166 @@
+{
+ "project": "stone_text_916",
+ "effect": "STONE_TEXT_REVEAL",
+ "aspect": "9:16",
+ "size": [
+  1080,
+  1920
+ ],
+ "verdict": "pass",
+ "reject_reasons": [],
+ "checks": [
+  {
+   "name": "aspect_ok",
+   "value": 1,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "1080×1920"
+  },
+  {
+   "name": "track_flagged_frames_pct",
+   "value": 0.0,
+   "threshold": null,
+   "mode": "max",
+   "unit": "%",
+   "status": "info",
+   "note": ""
+  },
+  {
+   "name": "track_err_mean_pct",
+   "value": 0.1637,
+   "threshold": 0.5,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "متوسط 1.77px — أقصى 2.69px"
+  },
+  {
+   "name": "track_err_max_pct",
+   "value": 0.2487,
+   "threshold": null,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "info",
+   "note": ""
+  },
+  {
+   "name": "track_jitter_px_rel_pct",
+   "value": 0.0036,
+   "threshold": 0.05,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.038px"
+  },
+  {
+   "name": "track_drift_px",
+   "value": 0.9804,
+   "threshold": null,
+   "mode": "max",
+   "unit": "px",
+   "status": "info",
+   "note": "نمو الخطأ بين بداية ونهاية المقطع"
+  },
+  {
+   "name": "ocr_silhouette[أرض للبيع]",
+   "value": 0.7143,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "OCR «رضليدع»"
+  },
+  {
+   "name": "ocr_composite[أرض للبيع]",
+   "value": 0.2667,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "OCR «بإيجهةن»"
+  },
+  {
+   "name": "ocr_rectified[أرض للبيع]",
+   "value": 0.5,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "OCR «ايشلنبيع» (الشكل بعد إزالة المنظور)"
+  },
+  {
+   "name": "ocr_similarity",
+   "value": 0.7143,
+   "threshold": 0.5,
+   "mode": "min",
+   "unit": "",
+   "status": "pass",
+   "note": "أسوأ beat: أعلى تشابه OCR بين (ظلّية، مركّب، معدّل المنظور)"
+  },
+  {
+   "name": "text_height_pct",
+   "value": 6.9366,
+   "threshold": 3.5,
+   "mode": "min",
+   "unit": "% of H",
+   "status": "pass",
+   "note": "ارتفاع النص على الشاشة وقت الثبات"
+  },
+  {
+   "name": "stroke_rel_pct",
+   "value": 2.7893,
+   "threshold": 0.45,
+   "mode": "min",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "سمك الخط التقديري"
+  },
+  {
+   "name": "floating_alpha_pct",
+   "value": 0,
+   "threshold": 1.5,
+   "mode": "max",
+   "unit": "%",
+   "status": "pass",
+   "note": "أسوأ نسبة ألفا خارج الحجم المسموح (نص+غبار+حطام)"
+  },
+  {
+   "name": "shadow_present",
+   "value": 29437,
+   "threshold": null,
+   "mode": "max",
+   "unit": "px",
+   "status": "info",
+   "note": "بكسلات الظل شبه الشفافة الداكنة"
+  },
+  {
+   "name": "perspective_err_pct",
+   "value": 0.1353,
+   "threshold": 0.8,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "متوسط 1.46px أقصى 3.01px"
+  },
+  {
+   "name": "contact_err_pct",
+   "value": 0.0406,
+   "threshold": 1.5,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "متوسط 0.44px أقصى 0.65px"
+  },
+  {
+   "name": "safe_zone_violations",
+   "value": 0,
+   "threshold": 0,
+   "mode": "max",
+   "unit": "boxes",
+   "status": "pass",
+   "note": "المنطقة الآمنة 9:16: x 5%-95%, y 6%-82%"
+  }
+ ]
+}

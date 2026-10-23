@@ -1,0 +1,157 @@
+{
+ "project": "building_outline_916",
+ "effect": "DIGITAL_BUILDING_OUTLINE",
+ "aspect": "9:16",
+ "size": [
+  540,
+  960
+ ],
+ "verdict": "pass",
+ "reject_reasons": [],
+ "checks": [
+  {
+   "name": "aspect_ok",
+   "value": 1,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "540×960"
+  },
+  {
+   "name": "track_flagged_frames_pct",
+   "value": 0.0,
+   "threshold": null,
+   "mode": "max",
+   "unit": "%",
+   "status": "info",
+   "note": ""
+  },
+  {
+   "name": "track_err_mean_pct",
+   "value": 0.3871,
+   "threshold": 0.5,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "متوسط 2.09px — أقصى 8.09px"
+  },
+  {
+   "name": "track_err_max_pct",
+   "value": 1.4985,
+   "threshold": null,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "info",
+   "note": ""
+  },
+  {
+   "name": "track_jitter_px_rel_pct",
+   "value": 0.0246,
+   "threshold": 0.05,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.133px"
+  },
+  {
+   "name": "track_drift_px",
+   "value": 1.3888,
+   "threshold": null,
+   "mode": "max",
+   "unit": "px",
+   "status": "info",
+   "note": "نمو الخطأ بين بداية ونهاية المقطع"
+  },
+  {
+   "name": "line_slip_pct",
+   "value": 0.174,
+   "threshold": 0.6,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "انزلاق الخطوط عن الواجهة الحقيقية: متوسط 0.94px أقصى 5.38px"
+  },
+  {
+   "name": "edge_recall",
+   "value": 0.6,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "نسبة الحواف الأفقية الحقيقية المكتشفة"
+  },
+  {
+   "name": "edge_precision",
+   "value": 0.5769,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "نسبة الحواف المكتشفة التي تطابق حافة حقيقية"
+  },
+  {
+   "name": "card_jitter_px",
+   "value": 0.1065,
+   "threshold": 0.5,
+   "mode": "max",
+   "unit": "px",
+   "status": "pass",
+   "note": "اهتزاز مواضع البطاقات (فرق ثانٍ)"
+  },
+  {
+   "name": "card_overlap",
+   "value": 0,
+   "threshold": 0,
+   "mode": "max",
+   "unit": "frames×pairs",
+   "status": "pass",
+   "note": "تداخل البطاقات"
+  },
+  {
+   "name": "ocr[فيلا للبيع]",
+   "value": 0.8235,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "«غيلللبيع|»"
+  },
+  {
+   "name": "ocr[جدة]",
+   "value": 1.0,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "«جدة»"
+  },
+  {
+   "name": "ocr[تواصل معنا]",
+   "value": 0.9412,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "«واصلمعنا»"
+  },
+  {
+   "name": "ocr_similarity",
+   "value": 0.9216,
+   "threshold": 0.6,
+   "mode": "min",
+   "unit": "",
+   "status": "pass",
+   "note": "متوسط وضوح البطاقات (OCR عربي)"
+  },
+  {
+   "name": "safe_zone_violations",
+   "value": 0,
+   "threshold": 0,
+   "mode": "max",
+   "unit": "boxes",
+   "status": "pass",
+   "note": "المنطقة الآمنة 9:16: x 5%-95%, y 6%-82%"
+  }
+ ]
+}

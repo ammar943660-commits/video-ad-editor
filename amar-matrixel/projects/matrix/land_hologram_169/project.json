@@ -1,0 +1,82 @@
+{
+ "recipe": "land_hologram",
+ "aspect": "16:9",
+ "fps": 30,
+ "duration": 4,
+ "plate": "plate.mp4",
+ "params": {
+  "area_m2": 2000,
+  "area_source": "حسب بيانات المالك",
+  "plan": {
+   "approved": true,
+   "source": "مخطط المالك",
+   "footprints": [
+    {
+     "poly": [
+      [
+       0.2,
+       0.25
+      ],
+      [
+       0.8,
+       0.25
+      ],
+      [
+       0.8,
+       0.75
+      ],
+      [
+       0.2,
+       0.75
+      ]
+     ]
+    }
+   ]
+  },
+  "building": {
+   "approved": false,
+   "boxes": [
+    {
+     "u": 0.35,
+     "v": 0.5,
+     "du": 0.22,
+     "dv": 0.3,
+     "floors": 4
+    },
+    {
+     "u": 0.62,
+     "v": 0.5,
+     "du": 0.2,
+     "dv": 0.3,
+     "floors": 6
+    }
+   ]
+  },
+  "timing": {
+   "outline": [
+    0.15,
+    0.9
+   ],
+   "fill": [
+    0.6,
+    1.2
+   ],
+   "area": [
+    1.0,
+    1.5
+   ],
+   "plan": [
+    1.4,
+    2.0
+   ],
+   "build": [
+    1.9,
+    3.2
+   ],
+   "badge": [
+    0.3,
+    0.6
+   ]
+  }
+ }
+}

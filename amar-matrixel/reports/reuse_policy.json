@@ -1,0 +1,41 @@
+[
+ {
+  "test": "reuse_stone_2beats_169",
+  "type": "reuse",
+  "qa": "   [stone bbox @hold] (348, 201, 270, 91) frame 45\n   [stone bbox @hold] (375, 145, 234, 150) frame 105\n── QA reuse_stone_2beats_169  [STONE_TEXT_REVEAL] 16:9 ──\n  · aspect_ok                             1            (عتبة max None) 960×540\n  · track_flagged_frames_pct            0.0 %          (عتبة max None) \n  ✓ track_err_mean_pct               0.1893 % of W     (عتبة max 0.5) متوسط 1.82px — أقصى 4.27px\n  · track_err_max_pct                0.4445 % of W     (عتبة max None) \n  ✓ track_jitter_px_rel_pct          0.0136 % of W     (عتبة max 0.05) اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.130px\n  · track_drift_px                   1.0304 px         (عتبة max None) نمو الخطأ بين بداية ونهاية المقطع\n  · ocr_silhouette[فيلا فاخرة]         0.75            (عتبة max None) OCR «فيفافرة»\n  · ocr_composite[فيلا فاخرة]        0.3077            (عتبة max None) OCR «اموا»\n  · ocr_rectified[فيلا فاخرة]           1.0            (عتبة max None) OCR «فيلافاخرة» (الشكل بعد إزالة المنظور)\n  · ocr_silhouette[للبيع]              0.25            (عتبة max None) OCR «عرز»\n  · ocr_composite[للبيع]             0.1538            (عتبة max None) OCR «‎aag.‏كرداارلاي‎te‏‎Ayof‏عن7كرفييه‎Vm‏23ج.>‎a‏~و»\n  · ocr_rectified[للبيع]             0.5714            (عتبة max None) OCR «بي'» (الشكل بعد إزالة المنظور)\n  ✓ ocr_similarity                      1.0            (عتبة min 0.5) أعلى تشابه OCR بين (ظلّية، مركّب، معدّل المنظور)\n  ✓ text_height_pct                  9.2651 % of H     (عتبة min 3.5) ارتفاع النص على الشاشة وقت الثبات\n  ✓ stroke_rel_pct                   1.0548 % of W     (عتبة min 0.45) سمك الخط التقديري\n  ✗ floating_alpha_pct               2.4715 %          (عتبة max 1.5) أسوأ نسبة ألفا خارج الحجم المسموح (نص+غبار+حطام)\n  · shadow_present                     3118 px         (عتبة max None) بكسلات الظل شبه الشفافة الداكنة\n  ✓ perspective_err_pct              0.1184 % of W     (عتبة max 0.8) متوسط 1.14px أقصى 3.84px\n  ✓ contact_err_pct                  0.0564 % of W     (عتبة max 1.5) متوسط 0.54px أقصى 1.78px\n  ✓ safe_zone_violations                  0 boxes      (عتبة max 0) المنطقة الآمنة 16:9: x 5%-95%, y 6%-90%\n  ⇒ الحكم: reject — عناصر طافية خارج حجم النص/الغبار\n"
+ },
+ {
+  "test": "reuse_holo_noarea_45",
+  "type": "reuse",
+  "qa": "── QA reuse_holo_noarea_45  [LAND_HOLOGRAM_SEQUENCE] 4:5 ──\n  · aspect_ok                             1            (عتبة max None) 540×676\n  · track_flagged_frames_pct            0.0 %          (عتبة max None) \n  ✓ track_err_mean_pct               0.3277 % of W     (عتبة max 0.5) متوسط 1.77px — أقصى 3.86px\n  · track_err_max_pct                0.7145 % of W     (عتبة max None) \n  ✓ track_jitter_px_rel_pct          0.0169 % of W     (عتبة max 0.05) اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.091px\n  · track_drift_px                   0.9975 px         (عتبة max None) نمو الخطأ بين بداية ونهاية المقطع\n  ✓ policy_violations                     0            (عتبة max 0) قواعد الصدق: المساحة/المخطط/المبنى المعتمد — سليمة\n  ✓ outline_to_gt_pct                0.3899 % of W     (عتبة max 0.7) الخط المرسوم مقابل حدود الأرض الحقيقية: 2.11px\n  ✓ perspective_err_pct              0.3325 % of W     (عتبة max 0.8) متوسط 1.80px أقصى 4.60px\n  ✓ safe_zone_violations                  0 boxes      (عتبة max 0) المنطقة الآمنة 4:5: x 5%-95%, y 5%-90%\n  ⇒ الحكم: pass\n"
+ },
+ {
+  "test": "reuse_outline_2cards_916",
+  "type": "reuse",
+  "qa": "── QA reuse_outline_2cards_916  [DIGITAL_BUILDING_OUTLINE] 9:16 ──\n  · aspect_ok                             1            (عتبة max None) 540×960\n  · track_flagged_frames_pct            0.0 %          (عتبة max None) \n  ✓ track_err_mean_pct               0.3871 % of W     (عتبة max 0.5) متوسط 2.09px — أقصى 8.09px\n  · track_err_max_pct                1.4985 % of W     (عتبة max None) \n  ✓ track_jitter_px_rel_pct          0.0246 % of W     (عتبة max 0.05) اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.133px\n  · track_drift_px                   1.3888 px         (عتبة max None) نمو الخطأ بين بداية ونهاية المقطع\n  ✓ line_slip_pct                     0.174 % of W     (عتبة max 0.6) انزلاق الخطوط عن الواجهة الحقيقية: متوسط 0.94px أقصى 5.38px\n  · edge_recall                         0.6            (عتبة max None) نسبة الحواف الأفقية الحقيقية المكتشفة\n  · edge_precision                   0.5769            (عتبة max None) نسبة الحواف المكتشفة التي تطابق حافة حقيقية\n  ✓ card_jitter_px                   0.0673 px         (عتبة max 0.5) اهتزاز مواضع البطاقات (فرق ثانٍ)\n  ✓ card_overlap                          0 frames×pairs (عتبة max 0) تداخل البطاقات\n  · ocr[للإيجار]                        1.0            (عتبة max None) «للإيجار»\n  · ocr[٣ غرف نوم]                   0.9231            (عتبة max None) «\"غرفنوم|»\n  ✓ ocr_similarity                   0.9615            (عتبة min 0.6) متوسط وضوح البطاقات (OCR عربي)\n  ✓ safe_zone_violations                  0 boxes      (عتبة max 0) المنطقة الآمنة 9:16: x 5%-95%, y 6%-82%\n  ⇒ الحكم: pass\n"
+ },
+ {
+  "test": "neg_building_without_approved",
+  "type": "policy-negative",
+  "expect_error_contains": "building.approved",
+  "passed": true
+ },
+ {
+  "test": "neg_approved_without_source",
+  "type": "policy-negative",
+  "expect_error_contains": "building.source",
+  "passed": true
+ },
+ {
+  "test": "neg_area_not_number",
+  "type": "policy-negative",
+  "expect_error_contains": "area_m2",
+  "passed": true
+ },
+ {
+  "test": "neg_unapproved_plan",
+  "type": "policy-negative",
+  "expect_error_contains": "plan.approved",
+  "passed": true
+ }
+]

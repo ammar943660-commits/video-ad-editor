@@ -1,0 +1,112 @@
+{
+ "project": "land_hologram_916",
+ "effect": "LAND_HOLOGRAM_SEQUENCE",
+ "aspect": "9:16",
+ "size": [
+  1080,
+  1920
+ ],
+ "verdict": "pass",
+ "reject_reasons": [],
+ "checks": [
+  {
+   "name": "aspect_ok",
+   "value": 1,
+   "threshold": null,
+   "mode": "max",
+   "unit": "",
+   "status": "info",
+   "note": "1080×1920"
+  },
+  {
+   "name": "track_flagged_frames_pct",
+   "value": 0.0,
+   "threshold": null,
+   "mode": "max",
+   "unit": "%",
+   "status": "info",
+   "note": ""
+  },
+  {
+   "name": "track_err_mean_pct",
+   "value": 0.1637,
+   "threshold": 0.5,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "متوسط 1.77px — أقصى 2.69px"
+  },
+  {
+   "name": "track_err_max_pct",
+   "value": 0.2487,
+   "threshold": null,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "info",
+   "note": ""
+  },
+  {
+   "name": "track_jitter_px_rel_pct",
+   "value": 0.0036,
+   "threshold": 0.05,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "اهتزاز ذو تردد عالٍ (انحراف معياري للفرق الثاني) 0.038px"
+  },
+  {
+   "name": "track_drift_px",
+   "value": 0.9804,
+   "threshold": null,
+   "mode": "max",
+   "unit": "px",
+   "status": "info",
+   "note": "نمو الخطأ بين بداية ونهاية المقطع"
+  },
+  {
+   "name": "policy_violations",
+   "value": 0,
+   "threshold": 0,
+   "mode": "max",
+   "unit": "",
+   "status": "pass",
+   "note": "قواعد الصدق: المساحة/المخطط/المبنى المعتمد — سليمة"
+  },
+  {
+   "name": "outline_to_gt_pct",
+   "value": 0.2263,
+   "threshold": 0.7,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "الخط المرسوم مقابل حدود الأرض الحقيقية: 2.44px"
+  },
+  {
+   "name": "perspective_err_pct",
+   "value": 0.1628,
+   "threshold": 0.8,
+   "mode": "max",
+   "unit": "% of W",
+   "status": "pass",
+   "note": "متوسط 1.76px أقصى 3.61px"
+  },
+  {
+   "name": "ocr_similarity",
+   "value": 0.8889,
+   "threshold": 0.5,
+   "mode": "min",
+   "unit": "",
+   "status": "pass",
+   "note": "قراءة المساحة بعد إزالة المنظور: «2000م» (المتوقع 2000)"
+  },
+  {
+   "name": "safe_zone_violations",
+   "value": 0,
+   "threshold": 0,
+   "mode": "max",
+   "unit": "boxes",
+   "status": "pass",
+   "note": "المنطقة الآمنة 9:16: x 5%-95%, y 6%-82%"
+  }
+ ]
+}

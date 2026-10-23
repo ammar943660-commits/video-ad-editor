@@ -1,0 +1,901 @@
+[
+ {
+  "name": "land_916_tilt",
+  "mode": "tilt",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×960"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.16,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 1.0,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 90.1px"
+   }
+  ],
+  "info": {
+   "mode": "tilt",
+   "simulated": false,
+   "still": true,
+   "overscan_zoom": 1.16,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "منظور حقيقي بالاعتماد على depth المقدَّم"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_916_rise",
+  "mode": "rise",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×960"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.215,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 1.0,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 114.6px"
+   }
+  ],
+  "info": {
+   "mode": "rise",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.215,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_916_push",
+  "mode": "push",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×960"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.005,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "facade_916_push",
+  "mode": "push",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×960"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.005,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_45_tilt",
+  "mode": "tilt",
+  "aspect": "4:5",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×676"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.175,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 1.0,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 91.0px"
+   }
+  ],
+  "info": {
+   "mode": "tilt",
+   "simulated": false,
+   "still": true,
+   "overscan_zoom": 1.175,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "4:5",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "منظور حقيقي بالاعتماد على depth المقدَّم"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_45_rise",
+  "mode": "rise",
+  "aspect": "4:5",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×676"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.235,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 1.0,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 116.1px"
+   }
+  ],
+  "info": {
+   "mode": "rise",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.235,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "4:5",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_45_push",
+  "mode": "push",
+  "aspect": "4:5",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×676"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.005,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "4:5",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "facade_45_push",
+  "mode": "push",
+  "aspect": "4:5",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×676"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.005,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "4:5",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_169_tilt",
+  "mode": "tilt",
+  "aspect": "16:9",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "960×540"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.295,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 1.0,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 142.1px"
+   }
+  ],
+  "info": {
+   "mode": "tilt",
+   "simulated": false,
+   "still": true,
+   "overscan_zoom": 1.295,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "16:9",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "منظور حقيقي بالاعتماد على depth المقدَّم"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_169_rise",
+  "mode": "rise",
+  "aspect": "16:9",
+  "rc": 4,
+  "checks": [],
+  "rejected": "✗ REJECT: تغطية المصدر لا تكفي حتى بتكبير 1.35× — المصدر صغير/الحركة كبيرة. قلّل --amount أو استخدم مصدراً أعلى دقة.",
+  "expect_reject": true,
+  "pass_reject": true,
+  "verdict": "pass"
+ },
+ {
+  "name": "land_169_push",
+  "mode": "push",
+  "aspect": "16:9",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "960×540"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.005,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "16:9",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_169_rise_gentle",
+  "mode": "rise",
+  "aspect": "16:9",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "960×540"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.335,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 1.0,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 88.8px"
+   }
+  ],
+  "info": {
+   "mode": "rise",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.335,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "16:9",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "facade_169_push",
+  "mode": "push",
+  "aspect": "16:9",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "960×540"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": true,
+   "still": true,
+   "overscan_zoom": 1.005,
+   "depth_used": false,
+   "shake": null,
+   "aspect": "16:9",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_916_rise_depth",
+  "mode": "rise",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×960"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.215,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 1.0,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 120.1px"
+   }
+  ],
+  "info": {
+   "mode": "rise",
+   "simulated": false,
+   "still": true,
+   "overscan_zoom": 1.215,
+   "depth_used": true,
+   "shake": null,
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "منظور حقيقي بالاعتماد على depth المقدَّم"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_916_push_depth",
+  "mode": "push",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×960"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": false,
+   "still": true,
+   "overscan_zoom": 1.005,
+   "depth_used": true,
+   "shake": null,
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "منظور حقيقي بالاعتماد على depth المقدَّم"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_916_parallax_depth",
+  "mode": "parallax",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "540×960"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.0,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.01,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "measured_vs_path_corr",
+    "value": 0.995,
+    "threshold": 0.95,
+    "status": "pass",
+    "note": "مدى الإزاحة المقاسة 1.3px"
+   }
+  ],
+  "info": {
+   "mode": "parallax",
+   "simulated": false,
+   "still": true,
+   "overscan_zoom": 1.0,
+   "depth_used": true,
+   "shake": null,
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 120,
+   "ease": "architect",
+   "note": "منظور حقيقي بالاعتماد على depth المقدَّم"
+  },
+  "verdict": "pass"
+ },
+ {
+  "name": "land_916_parallax_nodepth",
+  "mode": "parallax",
+  "aspect": "9:16",
+  "rc": 3,
+  "checks": [],
+  "rejected": "✗ REJECT: parallax يتطلب خريطة depth (نموذج 3D أو توليد AI معتمد). لن أخترع زوايا جديدة من صورة ثابتة.",
+  "expect_reject": true,
+  "pass_reject": true,
+  "verdict": "pass"
+ },
+ {
+  "name": "small_source_big_move",
+  "mode": "rise",
+  "aspect": "9:16",
+  "rc": 4,
+  "checks": [],
+  "rejected": "✗ REJECT: تغطية المصدر لا تكفي حتى بتكبير 1.35× — المصدر صغير/الحركة كبيرة. قلّل --amount أو استخدم مصدراً أعلى دقة.",
+  "expect_reject": true,
+  "pass_reject": true,
+  "verdict": "pass"
+ },
+ {
+  "name": "video_stabilized_push",
+  "mode": "push",
+  "aspect": "9:16",
+  "rc": 0,
+  "checks": [
+   {
+    "name": "aspect_ok",
+    "value": 1.0,
+    "threshold": 1,
+    "status": "pass",
+    "note": "1080×1920"
+   },
+   {
+    "name": "overscan_zoom",
+    "value": 1.005,
+    "threshold": 1.35,
+    "status": "pass",
+    "note": "أقل تكبير يضمن بلا حواف فارغة"
+   },
+   {
+    "name": "velocity_start_end_pct",
+    "value": 0.0,
+    "threshold": 8,
+    "status": "pass",
+    "note": "السرعة في أول/آخر 5٪ نسبة للقصوى"
+   },
+   {
+    "name": "jerk_ratio",
+    "value": 0.0,
+    "threshold": 0.08,
+    "status": "pass",
+    "note": "أقصى تغيّر تسارع نسبة للسرعة القصوى"
+   },
+   {
+    "name": "stab_improvement_x",
+    "value": 3.98,
+    "threshold": 2.0,
+    "status": "pass",
+    "note": "اهتزاز المدخل 3.50px → بعد التثبيت 0.88px (مرجع المصدر النظيف 0.10px)"
+   }
+  ],
+  "info": {
+   "mode": "push",
+   "simulated": true,
+   "still": false,
+   "overscan_zoom": 1.005,
+   "depth_used": false,
+   "shake": {
+    "raw_std_px": 2.8330896544512876,
+    "stab_std_px": 1.9089685397121405
+   },
+   "aspect": "9:16",
+   "fps": 30,
+   "frames": 78,
+   "ease": "architect",
+   "note": "rise/push بلا depth = محاكاة (دوران/Zoom رقمي)، وليس حركة كاميرا حقيقية"
+  },
+  "verdict": "pass"
+ }
+]

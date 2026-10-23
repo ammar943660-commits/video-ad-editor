@@ -1,0 +1,6 @@
+{
+  "name": "amar-matrixel",
+  "private": true,
+  "description": "AMAR Matrixel Visual Reconstruction — standalone cinematic FX recipe engine",
+  "dependencies": { "puppeteer-core": "^24.43.1" }
+}

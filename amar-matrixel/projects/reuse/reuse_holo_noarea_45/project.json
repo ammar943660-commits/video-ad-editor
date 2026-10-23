@@ -1,0 +1,40 @@
+{
+ "recipe": "land_hologram",
+ "aspect": "4:5",
+ "fps": 30,
+ "duration": 4,
+ "plate": "plate.mp4",
+ "params": {
+  "building": {
+   "approved": true,
+   "source": "نموذج المهندس م. أحمد — v3",
+   "boxes": [
+    {
+     "u": 0.5,
+     "v": 0.5,
+     "du": 0.3,
+     "dv": 0.4,
+     "floors": 5
+    }
+   ]
+  },
+  "timing": {
+   "outline": [
+    0.15,
+    0.9
+   ],
+   "fill": [
+    0.6,
+    1.2
+   ],
+   "build": [
+    1.4,
+    2.6
+   ],
+   "badge": [
+    0.3,
+    0.6
+   ]
+  }
+ }
+}

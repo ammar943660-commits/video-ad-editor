@@ -1,0 +1,37 @@
+[
+ {
+  "type": "rumble",
+  "at": 0.3,
+  "dur": 1.4,
+  "gain": 0.5
+ },
+ {
+  "type": "chips",
+  "at": 0.4,
+  "span": 1.2,
+  "gain": 0.25
+ },
+ {
+  "type": "thud",
+  "at": 1.5,
+  "gain": 0.9
+ },
+ {
+  "type": "dust",
+  "at": 1.4,
+  "dur": 1.5,
+  "gain": 0.35
+ },
+ {
+  "type": "rumble",
+  "at": 2.7,
+  "dur": 0.7,
+  "gain": 0.4
+ },
+ {
+  "type": "dust",
+  "at": 2.7,
+  "dur": 1.2,
+  "gain": 0.3
+ }
+]

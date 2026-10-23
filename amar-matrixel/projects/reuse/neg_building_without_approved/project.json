@@ -1,0 +1,20 @@
+{
+ "recipe": "land_hologram",
+ "aspect": "9:16",
+ "fps": 30,
+ "duration": 3,
+ "plate": "plate.mp4",
+ "params": {
+  "building": {
+   "boxes": [
+    {
+     "u": 0.5,
+     "v": 0.5,
+     "du": 0.3,
+     "dv": 0.3,
+     "floors": 3
+    }
+   ]
+  }
+ }
+}
