@@ -6,18 +6,22 @@ FONT='/home/user/video-ad-editor/video-ad-editor/motion/fonts/NotoKufiArabic-VF.
 def reset():
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc=bpy.context.scene; sc.render.engine='CYCLES'; sc.cycles.device='CPU'; return sc
-def text_object(text, height=1.0, depth=0.35, bevel=0.035, wght=900, font=FONT, name='TXT', bevel_seg=4, line_gap=1.25, tracking=1.0, condense=1.0, embolden=0.0):
+def text_object(text, height=1.0, depth=0.35, bevel=0.035, wght=900, font=FONT, name='TXT', bevel_seg=4, line_gap=1.25, tracking=1.0, condense=1.0, embolden=0.0, bbox_anchor=False, size_to=None):
     """نص عربي مُشكَّل → Curve مبثوق (اتحاد الكنتورات بلا تداخل). height بالمتر لوحدة em؛ القاعدة y=0، المركز x=0."""
     from glyphs import polygons
     lines=text.split('\n'); infos=[polygons(l,font,wght,tracking=tracking,condense=condense,embolden=embolden) for l in lines]
     cu=bpy.data.curves.new(name,'CURVE'); cu.dimensions='2D'; cu.fill_mode='BOTH'; cu.extrude=depth/2; cu.bevel_depth=bevel; cu.bevel_resolution=bevel_seg; cu.resolution_u=2
+    ybot=min(i[2][0] for i in infos)-line_gap*(len(infos)-1)
     off_y=0
+    if size_to:  # (width_m,height_m): يضبط height وcondense لمطابقة صندوق النص بالمتر
+        xr0=min(i[1][0] for i in infos); xr1=max(i[1][1] for i in infos); yr0=min(i[2][0] for i in infos)-line_gap*(len(infos)-1); yr1=max(i[2][1] for i in infos)
+        height=size_to[1]/(yr1-yr0); condense_eff=size_to[0]/((xr1-xr0)*height*condense); 
     for li,(polys,xr,yr) in enumerate(infos):
         cx=(xr[0]+xr[1])/2
         for ext,holes in polys:
             for ring in [ext]+holes:
                 sp=cu.splines.new('POLY'); sp.points.add(len(ring)-1); sp.use_cyclic_u=True
-                for p,(px,py) in zip(sp.points,ring): p.co=((px-cx)*height,(py+off_y)*height,0,1)
+                for p,(px,py) in zip(sp.points,ring): p.co=((px-cx)*height*(condense_eff if size_to else 1.0),(py+off_y-(ybot if bbox_anchor else 0))*height,0,1)
         off_y-=line_gap
     ob=bpy.data.objects.new(name,cu); bpy.context.scene.collection.objects.link(ob); return ob
 def concrete(name='CONCRETE', base=(0.56,0.55,0.53), rough=0.9, bump=0.5, scale=12.0):
@@ -58,3 +62,23 @@ def dust_material(name='DUST', color=(0.60,0.56,0.50), density=1.6, noise_scale=
 def add_puff(center, radius, mat, squash=0.8, rot=0.0):
     bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=16,radius=1.0,location=center); ob=bpy.context.object; ob.scale=(radius,radius,radius*squash); ob.rotation_euler=(0,0,rot)
     ob.data.materials.append(mat); ob.visible_shadow=True; return ob
+
+def shapes_object(shapes_json, depth=1.6, bevel=0.05, smooth=0.03, name='TXT_TRACED', bevel_seg=3):
+    """مجسم من صور ظلّية مرسومة/متتبَّعة (glyph_ws.py): إحداثيات بالمتر على مستوى النص (x على امتداد القاعدة، y للأعلى). تنعيم بـshapely."""
+    import json
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    d=json.load(open(shapes_json)); polys=[]
+    for sh in d['shapes']:
+        p=Polygon(sh['outer'],[h for h in sh['holes'] if len(h)>=3]).buffer(0)
+        if not p.is_empty: polys.append(p)
+    u=unary_union(polys)
+    if smooth>0: u=u.buffer(smooth,join_style=1).buffer(-smooth,join_style=1)  # إغلاق صغير فقط (يحفظ الثقوب والأجزاء الدقيقة)
+    u=u.simplify(0.02)
+    geoms=list(u.geoms) if hasattr(u,'geoms') else [u]
+    cu=bpy.data.curves.new(name,'CURVE'); cu.dimensions='2D'; cu.fill_mode='BOTH'; cu.extrude=depth/2; cu.bevel_depth=bevel; cu.bevel_resolution=bevel_seg; cu.resolution_u=2
+    for g in geoms:
+        for ring in [list(g.exterior.coords)[:-1]]+[list(i.coords)[:-1] for i in g.interiors]:
+            sp=cu.splines.new('POLY'); sp.points.add(len(ring)-1); sp.use_cyclic_u=True
+            for pt,(x,y) in zip(sp.points,ring): pt.co=(x,y,0,1)
+    ob=bpy.data.objects.new(name,cu); bpy.context.scene.collection.objects.link(ob); return ob

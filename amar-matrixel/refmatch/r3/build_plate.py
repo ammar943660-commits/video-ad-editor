@@ -4,8 +4,8 @@
    python3 build_plate.py <work> [n]"""
 import numpy as np,cv2,json,sys,glob,os
 from scipy.ndimage import gaussian_filter1d
-W=sys.argv[1]; n=int(sys.argv[2]) if len(sys.argv)>2 else 292
-CJ=json.load(open(f'{W}/camera.json')); cam=CJ['frames']; ALPHA=CJ.get('alpha',1.0); Hb=np.load(f'{W}/cam_H.npy'); Hb=np.eye(3)[None]+ALPHA*(Hb-np.eye(3)[None]); os.makedirs(f'{W}/plate',exist_ok=True)
+W=sys.argv[1]; n=int(sys.argv[2]) if len(sys.argv)>2 else 292; SRC=sys.argv[3] if len(sys.argv)>3 else None; OUTD=sys.argv[4] if len(sys.argv)>4 else f'{W}/plate'
+CJ=json.load(open(f'{W}/camera.json')); cam=CJ['frames']; ALPHA=CJ.get('alpha',1.0); Hb=np.load(f'{W}/cam_H.npy'); Hb=np.eye(3)[None]+ALPHA*(Hb-np.eye(3)[None]); os.makedirs(OUTD,exist_ok=True)
 f0=cv2.imread(f'{W}/frames/0001.png'); m=np.zeros(f0.shape[:2],np.uint8); m[585:625,995:1125]=255; f0=cv2.inpaint(f0,m,5,cv2.INPAINT_TELEA)
 H0=np.array(cam[0]['H_plane'])
 h,w=f0.shape[:2]
@@ -17,6 +17,8 @@ def warp(im,H): return cv2.warpPerspective(im,H,(w,h),flags=cv2.INTER_CUBIC,bord
 gains=[]
 raw=[]
 for i in range(n):
+    if SRC:
+        raw.append(cv2.imread(f'{SRC}/{i+1:04d}.png')); continue
     Hg=np.array(cam[i]['H_plane'])@np.linalg.inv(H0)
     G=warp(f0,Hg); B=warp(f0,Hb[i]); wg=warp((wg0*255).astype(np.uint8),Hg).astype(np.float32)[:,:,None]/255  # قناع الأرض يتبع الأرض
     P=(G.astype(np.float32)*wg+B.astype(np.float32)*(1-wg)).astype(np.uint8); raw.append(P)
@@ -35,5 +37,5 @@ P=np.array(params); P[200:]=P[200:].clip(P[:200].min(0),P[:200].max(0)); P=gauss
 for i in range(n):
     C=raw[i].astype(np.float32)/255+1e-3;out=np.zeros_like(C)
     for c in range(3): out[:,:,c]=np.exp(P[i,c*2]+P[i,c*2+1]*np.log(C[:,:,c]))
-    im=(np.clip(out-1e-3,0,1)*255).astype(np.uint8); M=cv2.getRotationMatrix2D((w/2,h/2),0,1.07); im=cv2.warpAffine(im,M,(w,h),flags=cv2.INTER_CUBIC,borderMode=cv2.BORDER_REPLICATE); cv2.imwrite(f'{W}/plate/{i+1:04d}.png',im)
+    im=(np.clip(out-1e-3,0,1)*255).astype(np.uint8); M=cv2.getRotationMatrix2D((w/2,h/2),0,1.07); im=cv2.warpAffine(im,M,(w,h),flags=cv2.INTER_CUBIC,borderMode=cv2.BORDER_REPLICATE) if not SRC else im; cv2.imwrite(f'{OUTD}/{i+1:04d}.png',im)
 np.save(f'{W}/grade.npy',P);print('plate',n,'frames; grade sample',np.round(P[[0,30,65,140],:],2).tolist())

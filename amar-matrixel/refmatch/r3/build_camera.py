@@ -25,6 +25,11 @@ pw,pl=plot_w,plot_w/asp; Pw=np.float32([[-pw/2,-pl/2],[pw/2,-pl/2],[pw/2,pl/2],[
 fr=[]
 for i in range(n):
     Hi=cv2.getPerspectiveTransform(Pw,Q[i].astype(np.float32)).astype(np.float64); R,t=pose(Hi); fr.append({'i':i,'R':R.flatten().tolist(),'t':t.tolist(),'quad':Q[i].tolist(),'H_plane':Hi.tolist()})
+for tag,QQ,al in (('camera_true',Qtrue,1.0),):
+    frT=[]
+    for i in range(n):
+        Hi=cv2.getPerspectiveTransform(Pw,QQ[i].astype(np.float32)).astype(np.float64); R,t=pose(Hi); frT.append({'i':i,'R':R.flatten().tolist(),'t':t.tolist(),'quad':QQ[i].tolist(),'H_plane':Hi.tolist()})
+    json.dump({'width':w,'height':h,'fov_deg':fov,'alpha':al,'plane':{'w':pw,'l':pl},'frames':frT},open(f'{W}/{tag}.json','w'))
 json.dump({'width':w,'height':h,'fov_deg':fov,'alpha':ALPHA,'quad_true':Qtrue.tolist(),'plane':{'w':pw,'l':pl},'frames':fr},open(f'{W}/camera.json','w'))
 print('plane',round(pw,1),round(pl,1)); C=lambda i:-np.array(fr[i]['R']).reshape(3,3).T@np.array(fr[i]['t'])
 for i in (0,65,140,230,280): print(i,'cam pos',np.round(C(i),1))

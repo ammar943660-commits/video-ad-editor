@@ -19,9 +19,9 @@
  ],
  "sky_strength": 0.18,
  "concrete": [
-  0.5,
-  0.5,
-  0.5
+  0.42,
+  0.42,
+  0.41
  ],
  "bump": 0.4,
  "noise_scale": 10,
@@ -30,16 +30,39 @@
   {
    "text": "\u0627\u0631\u0636 \u0644\u0644\u0628\u064a\u0639",
    "xy": [
-    1.7850000000000006,
-    -2.1199999999999997
+    -3.7100000000000017,
+    -8.120000000000001
    ],
-   "height": 13.3,
+   "height": 15.326501769736714,
    "xscale": 1.0,
    "depth": 1.7,
-   "lean": 10,
-   "tracking": 0.95,
-   "condense": 0.62,
-   "embolden": 0.0
+   "lean": 0,
+   "tracking": 1.0,
+   "condense": 0.3454838824442652,
+   "embolden": 0.0,
+   "plane": {
+    "base_center": [
+     0.6859,
+     2.5507
+    ],
+    "baseline_yaw": 0.86785,
+    "width_m": 42.737,
+    "height_m": 8.435,
+    "BL": [
+     -13.12816,
+     -13.75231,
+     0.0
+    ],
+    "BR": [
+     14.49996,
+     18.85371,
+     0.0
+    ]
+   },
+   "depth_m": 1.5,
+   "shapes": "/tmp/claude-0/-home-user-video-ad-editor/bbe43814-7d6f-54fe-bdc9-fbc17ff8515d/scratchpad/R3work/g1_shapes.json",
+   "bevel_m": 0.09
   }
- ]
+ ],
+ "n_puffs": 0
 }

@@ -3,7 +3,8 @@
    python3 rectify.py <work> <frame> <beat_idx> <out_prefix> [wpx]"""
 import sys,json,numpy as np,cv2,math
 W,fi,bi,outp=sys.argv[1],int(sys.argv[2]),int(sys.argv[3]),sys.argv[4]; wpx=int(sys.argv[5]) if len(sys.argv)>5 else 1400
-CAM=json.load(open(f'{W}/camera.json')); cfg=json.load(open('scene_cfg.json')); b=cfg['beats'][bi]
+import os
+CAM=json.load(open(f"{W}/{os.environ.get('AMX_CAM','camera.json')}")); cfg=json.load(open('scene_cfg.json')); b=cfg['beats'][bi]
 fr=CAM['frames'][fi]; R=np.array(fr['R']).reshape(3,3); t=np.array(fr['t']); w,h=CAM['width'],CAM['height']; f=(w/2)/math.tan(math.radians(CAM['fov_deg'])/2)
 def to_img(Pb):  # Blender world (x,y,z) → pixel
     Pcv=np.array([Pb[0],-Pb[1],-Pb[2]]); c=R@Pcv+t; return np.array([f*c[0]/c[2]+w/2,f*c[1]/c[2]+h/2])
