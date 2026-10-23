@@ -43,13 +43,15 @@ def add_piece(P,b,loc,k,Rp,i,f,rnd):
         t=(f-ex[0])/FPS-dly*0.3*0
         t=max(t-dly*0.35,0.0); g=9.8*b.get('gscale',1.0)
         # محاكاة تحليلية بخطوات: ارتداد واحد ثم استقرار
-        vel=Vector((hv.x,hv.y,vup)); p=rest.copy(); tt=0.0; dt=1/FPS; landed=False; zl=th*0.45
+        vel=Vector((hv.x,hv.y,vup)); p=rest.copy(); tt=0.0; dt=1/FPS; landed=False; zl=th*0.45; land_t=None; keep=rnd.random()<0.3
         n=int(t*FPS)
         for s_ in range(n):
             vel.z-=g*dt; p=p+vel*dt
             if p.z<=zl:
-                if abs(vel.z)>3.0 and not landed: p.z=zl; vel.z*=-0.28; vel.x*=0.6; vel.y*=0.6; landed=True
-                else: p.z=zl; vel=Vector((0,0,0)); landed=True; break
+                if abs(vel.z)>3.0 and not landed: p.z=zl; vel.z*=-0.28; vel.x*=0.6; vel.y*=0.6; landed=True; land_t=s_*dt
+                else:
+                    p.z=zl; vel=Vector((0,0,0)); landed=True; land_t=s_*dt if land_t is None else land_t; break
+        if landed and not keep and land_t is not None and t>land_t+0.5: return None
         pos=p; ts=min(t,3.0)
         if vel.length<1e-3 and p.z<=zl+1e-3:
             tilt=Quaternion(Vector((rnd.gauss(0,1),rnd.gauss(0,1),0)).normalized() if True else Vector((1,0,0)),rnd.uniform(0,0.35)); yawq=Quaternion((0,0,1),rnd.uniform(0,6.28))
