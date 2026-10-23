@@ -44,12 +44,22 @@ def render(i):
         X=C+s[:,None]*D; uv,z=proj0(X); xi=np.round(uv[:,0]).astype(int); yi=np.round(uv[:,1]).astype(int); inb=(xi>=0)&(xi<w)&(yi>=0)&(yi<h)&(z>0)&valid
         okm=np.zeros(len(D),bool); okm[inb]=M[yi[inb],xi[inb]]
         sel=okm&(s<best); best[sel]=s[sel]; u_out[sel]=uv[sel]; ok|=sel
+    # ثقوب (خارج تغطية الفريم المصدر): أسقط على الأرض/الخلفية البعيدة بلا قيد حدود ثم اقطع للحافة → تُنعَّم لاحقاً بدل «إسفين» مرآوي
+    nok=~ok
+    if nok.any():
+        dz=D[:,2]; 
+        for P0,N,M,name in (ground,planes[-1]):
+            den=D@N; s_=((P0-C)@N)/np.where(np.abs(den)<1e-9,1e-9,den); X=C+s_[:,None]*D; uv,z=proj0(X)
+            pick=nok&(s_>0.5)&(s_<5000)&(z>0)&((dz<-0.01) if name=='GROUND' else (dz>=-0.01)); u_out[pick]=np.clip(uv[pick],[0,0],[w-1,h-1]); nok&=~pick
     mx=u_out[:,0].reshape(h,w).astype(np.float32); my=u_out[:,1].reshape(h,w).astype(np.float32)
     img=cv2.remap(f0,mx,my,cv2.INTER_CUBIC,borderMode=cv2.BORDER_REFLECT_101)
     hole=(~ok.reshape(h,w)).astype(np.uint8)*255; hole=cv2.dilate(hole,np.ones((3,3),np.uint8))
-    if hole.any(): img=cv2.inpaint(img,hole,3,cv2.INPAINT_TELEA)
+    if hole.any():
+        bl=cv2.GaussianBlur(img,(0,0),14); fm=cv2.GaussianBlur(hole.astype(np.float32)/255,(0,0),5)[:,:,None]; img=(img*(1-fm)+bl*fm).astype(np.uint8)
+    os.makedirs(OUT+'_hole',exist_ok=True); hm=cv2.GaussianBlur(cv2.dilate(hole,np.ones((25,25),np.uint8)),(0,0),6); cv2.imwrite(f'{OUT}_hole/{CUR[0]+1:04d}.png',hm)
     return img
+CUR=[0]
 frames=[int(x) for x in os.environ['FRAMES'].split(',')] if os.environ.get('FRAMES') else range(0,n)
 for i in frames:
-    cv2.imwrite(f'{OUT}/{i+1:04d}.png',render(i))
+    CUR[0]=i; cv2.imwrite(f'{OUT}/{i+1:04d}.png',render(i))
     if i%40==0: print('plate_proj',i,flush=True)

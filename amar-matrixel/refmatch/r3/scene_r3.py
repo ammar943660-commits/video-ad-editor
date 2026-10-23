@@ -11,12 +11,12 @@ def cam_matrix(fr):
     R=np.array(fr['R']).reshape(3,3); t=np.array(fr['t']); D=np.diag([1,-1,-1.]); F=np.diag([1,-1,-1.])
     V=np.eye(4); V[:3,:3]=F@R@D; V[:3,3]=F@t; return np.linalg.inv(V)
 def setup_scene(fi, text_cfg=None):
-    sc=reset(); sc.render.resolution_x=CAM['width']; sc.render.resolution_y=CAM['height']; sc.render.resolution_percentage=100
+    sc=reset(); sc.render.resolution_x=CAM['width']; sc.render.resolution_y=CAM['height']; sc.render.resolution_percentage=int(os.environ.get('AMX_RES','100'))
     sc.view_settings.view_transform='Standard'; sc.view_settings.look='None'; sc.cycles.samples=samples; sc.cycles.use_denoising=True; sc.render.film_transparent=True; sc.cycles.film_exposure=1.0
     cam=bpy.data.cameras.new('cam'); cam.sensor_fit='HORIZONTAL'; cam.sensor_width=36; cam.lens=18/math.tan(math.radians(CAM['fov_deg'])/2); cam.clip_start=0.5; cam.clip_end=2000
     co=bpy.data.objects.new('cam',cam); sc.collection.objects.link(co); sc.camera=co; co.matrix_world=Matrix(cam_matrix(CAM['frames'][fi]).tolist())
     # أرضية Shadow Catcher
-    bpy.ops.mesh.primitive_plane_add(size=1000); g=bpy.context.object; g.name='GROUND'; g.is_shadow_catcher=True
+    bpy.ops.mesh.primitive_plane_add(size=1000); g=bpy.context.object; g.name='GROUND'; g.is_shadow_catcher=True; g.location.z=float(os.environ.get('AMX_GZ','0')); g.hide_render=bool(os.environ.get('AMX_NOGROUND'))
     # إضاءة: شمس + سماء
     sun=bpy.data.lights.new('sun','SUN'); sun.energy=cfg['sun_energy']; sun.angle=math.radians(cfg['sun_angle']); sun.color=cfg['sun_color']
     so=bpy.data.objects.new('sun',sun); so.rotation_euler=tuple(math.radians(a) for a in cfg['sun_rot']); sc.collection.objects.link(so)

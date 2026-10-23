@@ -15,10 +15,25 @@ def chaik(p,n):
             o+= [(.75*a[0]+.25*b[0],.75*a[1]+.25*b[1]),(.25*a[0]+.75*b[0],.25*a[1]+.75*b[1])]
         p=o
     return p
+def vw(s,pts):
+    v=s.get('view') or G.get('view')
+    if not v: return pts
+    return [(v['x0']+x/v['s'],v['y0']+y/v['s']) for x,y in pts]
 def mk(s):
-    if 'ellipse' in s: cx,cy,rx,ry=s['ellipse']; return affinity.scale(Point(cx,cy).buffer(1,resolution=24),rx,ry)
+    if 'ellipse' in s:
+        cx,cy,rx,ry=s['ellipse']
+        v=s.get('view') or G.get('view')
+        if v: cx,cy=v['x0']+cx/v['s'],v['y0']+cy/v['s']; rx/=v['s']; ry/=v['s']
+        return affinity.scale(Point(cx,cy).buffer(1,resolution=24),rx,ry)
+    if 'superellipse' in s:
+        cx,cy,hw,hh,ne=s['superellipse']; th=np.linspace(0,2*np.pi,96,endpoint=False)
+        P=[(cx+hw*np.sign(np.cos(t))*abs(np.cos(t))**(2/ne),cy+hh*np.sign(np.sin(t))*abs(np.sin(t))**(2/ne)) for t in th]
+        hs=[]
+        for h in s.get('holes_se',[]):
+            hx,hy,hhw,hhh,hn=h; hs.append([(hx+hhw*np.sign(np.cos(t))*abs(np.cos(t))**(2/hn),hy+hhh*np.sign(np.sin(t))*abs(np.sin(t))**(2/hn)) for t in th])
+        return Polygon(P,hs).buffer(0)
     n=s.get('smooth',0)
-    return Polygon(chaik(s['pts'],n),[chaik(h,n) for h in s.get('holes',[])]).buffer(0)
+    return Polygon(chaik(vw(s,s['pts']),n),[chaik(vw(s,h),n) for h in s.get('holes',[])]).buffer(0)
 U=unary_union([mk(s) for s in G['add']])
 if G.get('erase'): U=U.difference(unary_union([mk(s) for s in G['erase']]))
 def tom(c): return [(R['x0']+x/R['wpx']*(R['x1']-R['x0']), R['z1']-y/R['hpx']*(R['z1']-R['z0'])) for x,y in c]

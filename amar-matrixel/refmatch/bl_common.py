@@ -52,7 +52,7 @@ def dust_material(name='DUST', color=(0.60,0.56,0.50), density=1.6, noise_scale=
     # سقوط شعاعي: 1 - |object coord| (كرة وحدة)
     rad=nt.nodes.new('ShaderNodeMath'); rad.operation='SUBTRACT'; rad.inputs[0].default_value=1.0
     rmap=nt.nodes.new('ShaderNodeMapRange'); rmap.inputs[1].default_value=0.0; rmap.inputs[2].default_value=0.75; rmap.inputs[3].default_value=0.0; rmap.inputs[4].default_value=1.0; rmap.clamp=True
-    nmap=nt.nodes.new('ShaderNodeMapRange'); nmap.inputs[1].default_value=0.38; nmap.inputs[2].default_value=0.78; nmap.inputs[3].default_value=0.0; nmap.inputs[4].default_value=1.0; nmap.clamp=True
+    nmap=nt.nodes.new('ShaderNodeMapRange'); nmap.inputs[1].default_value=0.42; nmap.inputs[2].default_value=0.66; nmap.inputs[3].default_value=0.0; nmap.inputs[4].default_value=1.0; nmap.clamp=True
     mul=nt.nodes.new('ShaderNodeMath'); mul.operation='MULTIPLY'; dens=nt.nodes.new('ShaderNodeMath'); dens.operation='MULTIPLY'; dens.inputs[1].default_value=density
     L.new(tc.outputs['Object'],mp.inputs['Vector']); L.new(mp.outputs['Vector'],n1.inputs['Vector']); L.new(gen.outputs['Object'],sep.inputs[0]); L.new(sep.outputs['Value'],rad.inputs[1]); L.new(rad.outputs['Value'],rmap.inputs['Value'])
     L.new(n1.outputs['Fac'],nmap.inputs['Value']); L.new(nmap.outputs['Result'],mul.inputs[0]); L.new(rmap.outputs['Result'],mul.inputs[1]); L.new(mul.outputs['Value'],dens.inputs[0])
@@ -102,3 +102,13 @@ def add_billow(center, radius, mat, seed=0, subdiv=4, disp=0.55, tex_scale=2.4, 
     ob.rotation_euler=(seed*0.7,seed*1.3,seed*2.1); ob.data.materials.append(mat)
     for p in ob.data.polygons: p.use_smooth=True
     return ob
+
+def parts_object(parts, depth=1.5, bevel=0.06, name='PART', bevel_seg=3):
+    """مجسم مبثوق من أجزاء جاهزة [{'outer':[(x,y)..],'holes':[[..]]}] بلا shapely (للماك)."""
+    cu=bpy.data.curves.new(name,'CURVE'); cu.dimensions='2D'; cu.fill_mode='BOTH'; cu.extrude=depth/2; cu.bevel_depth=bevel; cu.bevel_resolution=bevel_seg; cu.resolution_u=2
+    for g in parts:
+        for ring in [g['outer']]+list(g.get('holes',[])):
+            if len(ring)<3: continue
+            sp=cu.splines.new('POLY'); sp.points.add(len(ring)-1); sp.use_cyclic_u=True
+            for pt,(x,y) in zip(sp.points,ring): pt.co=(x,y,0,1)
+    ob=bpy.data.objects.new(name,cu); bpy.context.scene.collection.objects.link(ob); return ob
