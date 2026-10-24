@@ -1,0 +1,41 @@
+{
+ "recipe": "stone_text",
+ "aspect": "16:9",
+ "fps": 30,
+ "duration": 4,
+ "plate": "plate.mp4",
+ "params": {
+  "font": "Tajawal Black",
+  "material": "sandstone",
+  "beats": [
+   {
+    "lines": [
+     "فيلا فاخرة"
+    ],
+    "t0": 0.2,
+    "rise": 1.0,
+    "hold": 0.6,
+    "sink": 0.5,
+    "size": 0.7,
+    "anchor": [
+     0,
+     0.1
+    ]
+   },
+   {
+    "lines": [
+     "للبيع"
+    ],
+    "t0": 2.2,
+    "rise": 1.0,
+    "hold": 0.6,
+    "sink": 0.5,
+    "size": 0.5,
+    "anchor": [
+     0,
+     0.1
+    ]
+   }
+  ]
+ }
+}

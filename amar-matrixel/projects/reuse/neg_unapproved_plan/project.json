@@ -1,0 +1,13 @@
+{
+ "recipe": "land_hologram",
+ "aspect": "9:16",
+ "fps": 30,
+ "duration": 3,
+ "plate": "plate.mp4",
+ "params": {
+  "plan": {
+   "approved": false,
+   "footprints": []
+  }
+ }
+}

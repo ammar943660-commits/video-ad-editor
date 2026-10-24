@@ -1,0 +1,46 @@
+{
+ "recipe": "building_outline",
+ "aspect": "9:16",
+ "fps": 30,
+ "duration": 4,
+ "plate": "plate.mp4",
+ "params": {
+  "color": "#ffc14d",
+  "core": "#fff3d1",
+  "timing": {
+   "outline": [
+    0.1,
+    0.8
+   ],
+   "major": [
+    0.6,
+    1.8
+   ],
+   "detail": [
+    1.0,
+    2.4
+   ]
+  },
+  "cards": [
+   {
+    "text": "للإيجار",
+    "u": 0.2,
+    "v": 0.12,
+    "dx": 3,
+    "dy": -14,
+    "at": 2.0,
+    "color": "#ffc14d"
+   },
+   {
+    "text": "٣ غرف نوم",
+    "sub": "مساحة البناء ٣٠٠ م²",
+    "u": 0.8,
+    "v": 0.75,
+    "dx": -3,
+    "dy": 20,
+    "at": 2.4,
+    "color": "#ffc14d"
+   }
+  ]
+ }
+}

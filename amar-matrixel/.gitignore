@@ -1,0 +1,25 @@
+node_modules/
+__pycache__/
+*.pyc
+# مخرجات الريندر الثقيلة تُعاد بالأوامر؛ نحتفظ فقط بالـGround Truth والمعاينات
+projects/**/renders/*
+!projects/**/renders/meta.json
+!projects/**/renders/render-info.json
+# نسخ اللقطة/التتبع داخل مشاريع الوصفات تُعاد بـ: python3 tools/amx.py materialize
+projects/*/stone_text_*/plate.mp4
+projects/*/land_hologram_*/plate.mp4
+projects/*/building_outline_*/plate.mp4
+projects/*/reuse_*/plate.mp4
+projects/hero/plate_*/plate.mp4
+projects/*/*/export/
+# المعاينات المرجعية (تتجاوز *.mp4 العامة في جذر المستودع)
+!previews/*.mp4
+!previews/camera/*.mp4
+!projects/matrix/plate_*/plate.mp4
+previews/camera/_*
+refmatch/fonts_tmp/
+refmatch/*/ae_export/plates/
+# النسخ النهائية المعتمدة ومعاينات/نتائج refmatch — تُحفظ دائماً (تتجاوز *.mp4 العامة)
+!refmatch/final/*.mp4
+!refmatch/previews/*.mp4
+!refmatch/ai_test_r3/results/*.mp4

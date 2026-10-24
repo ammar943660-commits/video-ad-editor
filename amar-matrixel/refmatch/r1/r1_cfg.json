@@ -1,0 +1,433 @@
+{
+ "font": "/home/user/video-ad-editor/amar-matrixel/refmatch/fonts_tmp/baloobhaijaan2-800-full.ttf",
+ "sun_energy": 4.0,
+ "sun_angle": 4,
+ "sun_color": [
+  1.0,
+  0.93,
+  0.82
+ ],
+ "sun_rot": [
+  55,
+  0,
+  -40
+ ],
+ "sky_color": [
+  0.75,
+  0.72,
+  0.66
+ ],
+ "sky_strength": 0.9,
+ "concrete": [
+  0.32,
+  0.32,
+  0.31
+ ],
+ "bump": 0.6,
+ "noise_scale": 10,
+ "bevel": 0.012,
+ "_doc": "R1 — نص ذهب سائل. كل النصوص/التوقيت/المواد قابلة للتعديل هنا؛ أشكال الحروف تُولَّد بـ make_text_shapes.py (خط مؤقت Baloo Bhaijaan 2 — غير نهائي حتى تتبّع حروف المرجع).",
+ "material": "gold",
+ "gold": {
+  "base": [
+   0.92,
+   0.5,
+   0.12
+  ],
+  "rough": 0.16,
+  "bump": 0.12,
+  "scale": 5.0
+ },
+ "extras": [
+  "/home/user/video-ad-editor/amar-matrixel/refmatch/r1/r1_extras.py"
+ ],
+ "beats": [
+  {
+   "text": "ارض\\nللبيع",
+   "plane": {
+    "base_center": [
+     2.8377515057114753,
+     -11.575488556487851
+    ],
+    "baseline_yaw": 0.6615428040440702,
+    "width_m": 25.023188472360793,
+    "height_m": 18.271354474969772,
+    "BL": [
+     -7.034464029280052,
+     -19.26179786339806,
+     -0.0
+    ],
+    "BR": [
+     12.709967040703003,
+     -3.8891792495776443,
+     -0.0
+    ]
+   },
+   "pieces": "/tmp/claude-0/-home-user-video-ad-editor/bbe43814-7d6f-54fe-bdc9-fbc17ff8515d/scratchpad/R1work/b1_pieces.json",
+   "ref_frame": 0,
+   "zc": 0.0,
+   "form": [
+    30,
+    40
+   ],
+   "settle": 60,
+   "form_style": "rise",
+   "depth_m": 2.0,
+   "bevel_m": 0.25,
+   "centre": [
+    12.511594236180397,
+    9.135677237484886
+   ],
+   "scatter": [
+    8,
+    7,
+    5
+   ],
+   "speed": [
+    10,
+    26
+   ],
+   "up": [
+    2,
+    10
+   ],
+   "gscale": 1.6,
+   "boulder_after": 100000,
+   "no_rocks": true,
+   "explode": [
+    90,
+    400
+   ],
+   "keep": 0.08,
+   "debris_life": 0.8
+  },
+  {
+   "text": "في حي\\nالحمراء",
+   "plane": {
+    "base_center": [
+     -1.9413750398106657,
+     -2.4709190698477705
+    ],
+    "baseline_yaw": 0.663368415015341,
+    "width_m": 28.150249395287737,
+    "height_m": 16.852487150513994,
+    "BL": [
+     -13.031482784594516,
+     -11.138020399779805,
+     -0.0
+    ],
+    "BR": [
+     9.148732704973185,
+     6.196182260084264,
+     -0.0
+    ]
+   },
+   "pieces": "/tmp/claude-0/-home-user-video-ad-editor/bbe43814-7d6f-54fe-bdc9-fbc17ff8515d/scratchpad/R1work/b2_pieces.json",
+   "ref_frame": 0,
+   "zc": 0.0,
+   "form": [
+    98,
+    104
+   ],
+   "settle": 118,
+   "form_style": "rise",
+   "depth_m": 2.0,
+   "bevel_m": 0.25,
+   "centre": [
+    14.075124697643869,
+    8.426243575256997
+   ],
+   "scatter": [
+    8,
+    7,
+    5
+   ],
+   "speed": [
+    10,
+    26
+   ],
+   "up": [
+    2,
+    10
+   ],
+   "gscale": 1.6,
+   "boulder_after": 100000,
+   "no_rocks": true,
+   "explode": [
+    150,
+    400
+   ],
+   "keep": 0.08,
+   "debris_life": 0.8
+  },
+  {
+   "text": "2000\\nمتر",
+   "plane": {
+    "base_center": [
+     -0.4917037851494648,
+     -1.3379771770922417
+    ],
+    "baseline_yaw": 0.6633684150153409,
+    "width_m": 25.398254300425737,
+    "height_m": 17.71273374749453,
+    "BL": [
+     -10.497632072530529,
+     -9.157774456118155,
+     -0.0
+    ],
+    "BR": [
+     9.514224502231599,
+     6.481820101933671,
+     -0.0
+    ]
+   },
+   "pieces": "/tmp/claude-0/-home-user-video-ad-editor/bbe43814-7d6f-54fe-bdc9-fbc17ff8515d/scratchpad/R1work/b3_pieces.json",
+   "ref_frame": 0,
+   "zc": 0.0,
+   "form": [
+    160,
+    166
+   ],
+   "settle": 180,
+   "form_style": "rise",
+   "depth_m": 2.0,
+   "bevel_m": 0.25,
+   "centre": [
+    12.699127150212869,
+    8.856366873747264
+   ],
+   "scatter": [
+    8,
+    7,
+    5
+   ],
+   "speed": [
+    10,
+    26
+   ],
+   "up": [
+    2,
+    10
+   ],
+   "gscale": 1.6,
+   "boulder_after": 100000,
+   "no_rocks": true,
+   "explode": [
+    210,
+    400
+   ],
+   "keep": 0.08,
+   "debris_life": 0.8
+  },
+  {
+   "text": "تواصل معنا\\n0123456789",
+   "plane": {
+    "base_center": [
+     -9.003021008058521,
+     8.000584880222782
+    ],
+    "baseline_yaw": 0.6656409034203522,
+    "width_m": 46.93569617933387,
+    "height_m": 16.529639903775166,
+    "BL": [
+     -27.46097983405211,
+     -6.492297853643841,
+     -0.0
+    ],
+    "BR": [
+     9.454937817935068,
+     22.493467614089404,
+     -0.0
+    ]
+   },
+   "pieces": "/tmp/claude-0/-home-user-video-ad-editor/bbe43814-7d6f-54fe-bdc9-fbc17ff8515d/scratchpad/R1work/b4_pieces.json",
+   "ref_frame": 0,
+   "zc": 0.0,
+   "form": [
+    214,
+    220
+   ],
+   "settle": 234,
+   "form_style": "rise",
+   "depth_m": 2.0,
+   "bevel_m": 0.25,
+   "centre": [
+    23.467848089666933,
+    8.264819951887583
+   ],
+   "scatter": [
+    8,
+    7,
+    5
+   ],
+   "speed": [
+    10,
+    26
+   ],
+   "up": [
+    2,
+    10
+   ],
+   "gscale": 1.6,
+   "boulder_after": 100000,
+   "no_rocks": true,
+   "end": 294,
+   "keep": 0.08,
+   "debris_life": 0.8
+  }
+ ],
+ "seq": {
+  "seed": 3,
+  "dust": {
+   "color": [
+    1.0,
+    0.96,
+    0.9
+   ],
+   "gain": 2.0,
+   "cutoff": 0.3
+  },
+  "events": []
+ },
+ "r1": {
+  "lot_px": [
+   [
+    530,
+    262
+   ],
+   [
+    1013,
+    336
+   ],
+   [
+    790,
+    582
+   ],
+   [
+    147,
+    350
+   ]
+  ],
+  "puddles": [
+   {
+    "center_px": [
+     545,
+     385
+    ],
+    "radius_m": 7,
+    "grow": [
+     30,
+     55
+    ],
+    "end": 110,
+    "seed": 1,
+    "aspect": 1.4
+   },
+   {
+    "center_px": [
+     560,
+     350
+    ],
+    "radius_m": 10,
+    "grow": [
+     98,
+     125
+    ],
+    "end": 172,
+    "seed": 2,
+    "aspect": 1.4
+   },
+   {
+    "center_px": [
+     585,
+     360
+    ],
+    "radius_m": 12,
+    "grow": [
+     160,
+     185
+    ],
+    "end": 226,
+    "seed": 7,
+    "aspect": 1.4
+   }
+  ],
+  "columns": [
+   {
+    "center_px": [
+     545,
+     380
+    ],
+    "f0": 24,
+    "f1": 62,
+    "h": 22,
+    "r": 2.2,
+    "crown": 9
+   },
+   {
+    "center_px": [
+     565,
+     345
+    ],
+    "f0": 96,
+    "f1": 120,
+    "h": 16,
+    "r": 2.0
+   },
+   {
+    "center_px": [
+     585,
+     345
+    ],
+    "f0": 158,
+    "f1": 182,
+    "h": 16,
+    "r": 2.0
+   },
+   {
+    "center_px": [
+     570,
+     315
+    ],
+    "f0": 212,
+    "f1": 236,
+    "h": 14,
+    "r": 2.0
+   }
+  ],
+  "droplets": {
+   "draw": [
+    18,
+    32
+   ],
+   "end": 80,
+   "n": 120,
+   "h": 2.2,
+   "r": 0.35,
+   "life": 1.0,
+   "rope_r": 0.15,
+   "glow": 5
+  },
+  "smoke": {
+   "f": 52,
+   "end": 105,
+   "n": 30,
+   "z": [
+    1.5,
+    5
+   ],
+   "r": [
+    3,
+    5.5
+   ],
+   "rise": 2.5,
+   "density": 0.55,
+   "color": [
+    0.92,
+    0.9,
+    0.86
+   ],
+   "gain": 1.6
+  }
+ }
+}

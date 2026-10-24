@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8">
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+<style>html,body{margin:0;background:transparent;overflow:hidden}canvas{display:block}</style></head>
+<body><script type="module">
+/* stage: يحمّل project + track + وصفة، ويعرض window.__frame(i) → PNG/JPEG dataURL */
+import * as THREE from 'three';
+import * as core from '/engine/core.js';
+const q = new URLSearchParams(location.search), SCALE = parseFloat(q.get('scale') || '1');
+window.AMX = { ready: false, error: null };
+(async () => {
+  try {
+    const project = await (await fetch('/proj/project.json')).json();
+    let track = null; try { const r = await fetch('/proj/track.json'); if (r.ok) track = await r.json(); } catch (e) {}
+    const [bw, bh] = core.aspectSize(project.aspect || '9:16');
+    const ev = v => 2 * Math.round(v / 2), W = ev(bw * SCALE), H = ev(bh * SCALE);
+    const out = document.createElement('canvas'); out.width = W; out.height = H; document.body.appendChild(out);
+    const g = out.getContext('2d');
+    const mod = await import('/engine/recipes/' + project.recipe + '.js');
+    const ctx = { log: [], THREE, core, project, track, W, H, S: SCALE, out, g, fps: project.fps || 30, params: project.params || {}, bw, bh };
+    await mod.setup(ctx);
+    const fmt = mod.output === 'opaque' ? 'image/jpeg' : 'image/png';
+    window.AMX.frame = async i => { const t = i / ctx.fps; if (mod.output !== 'opaque') g.clearRect(0, 0, W, H); await mod.frame(ctx, i, t); return out.toDataURL(fmt, 0.95).split(',')[1]; };
+    window.AMX.log = () => ctx.log;
+    window.AMX.meta = () => (mod.meta ? mod.meta(ctx) : null);
+    window.AMX.info = { W, H, fps: ctx.fps, frames: Math.round((project.duration || 4) * ctx.fps), output: mod.output || 'alpha' };
+    window.AMX.ready = true;
+  } catch (e) { window.AMX.error = (e && e.stack) || String(e); }
+})();
+</script></body></html>

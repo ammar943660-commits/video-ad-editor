@@ -1,0 +1,253 @@
+{
+ "_doc": "R4 على عقار جديد (لقطة اختبار تركيبية من مكتبة v1، 4 ث): نفس المؤثر بإعداد العقار",
+ "fov_deg": 68.62,
+ "lot_m": [
+  50.0,
+  40.0
+ ],
+ "fps": 30,
+ "color": {
+  "core": [
+   255,
+   215,
+   150
+  ],
+  "glow1": [
+   240,
+   150,
+   40
+  ],
+  "glow2": [
+   220,
+   110,
+   20
+  ],
+  "fill": [
+   230,
+   140,
+   50
+  ]
+ },
+ "intensity": 0.85,
+ "outline": {
+  "draw": [
+   18,
+   30
+  ],
+  "wall_h": 2.2,
+  "wall_rise": [
+   22,
+   34
+  ],
+  "fade_out": [
+   300,
+   301
+  ],
+  "wall_fill": 0.05,
+  "posts": 6.0,
+  "wall_fade": [
+   140,
+   160
+  ],
+  "wall_rise2": [
+   206,
+   222
+  ]
+ },
+ "area_text": {
+  "text": "2000m²",
+  "font": "../fonts_tmp/baloo2-800.ttf",
+  "wght": null,
+  "center_uv": [
+   0.5,
+   0.48
+  ],
+  "width_u": 0.6,
+  "appear": [
+   102,
+   118
+  ],
+  "fade": [
+   198,
+   214
+  ],
+  "extrude_v": 0.012,
+  "reflection": 0.33
+ },
+ "footprints": {
+  "draw": [
+   160,
+   176
+  ]
+ },
+ "buildings": [
+  {
+   "id": "F1",
+   "uv": [
+    0.045,
+    0.205,
+    0.019,
+    0.221
+   ],
+   "floors": 8,
+   "grow": [
+    190,
+    206
+   ],
+   "floor_h": 3.2,
+   "fp_delay": 18,
+   "setback_floors": 0
+  },
+  {
+   "id": "F2",
+   "uv": [
+    0.332,
+    0.458,
+    0.094,
+    0.236
+   ],
+   "floors": 10,
+   "grow": [
+    172,
+    184
+   ],
+   "floor_h": 3.2,
+   "fp_delay": 9,
+   "antenna": 1
+  },
+  {
+   "id": "F3",
+   "uv": [
+    0.606,
+    0.774,
+    0.023,
+    0.267
+   ],
+   "floors": 8,
+   "grow": [
+    190,
+    206
+   ],
+   "floor_h": 3.2,
+   "fp_delay": 6,
+   "setback_floors": 0
+  },
+  {
+   "id": "F4",
+   "uv": [
+    0.073,
+    0.207,
+    0.275,
+    0.535
+   ],
+   "floors": 7,
+   "grow": [
+    190,
+    206
+   ],
+   "floor_h": 3.2,
+   "fp_delay": 15,
+   "setback_floors": 0
+  },
+  {
+   "id": "F5",
+   "uv": [
+    0.06,
+    0.23,
+    0.74,
+    0.99
+   ],
+   "floors": 1,
+   "grow": [
+    194,
+    204
+   ],
+   "floor_h": 3.2,
+   "balconies": false,
+   "pilotis": false,
+   "grow_late": [
+    204,
+    236
+   ],
+   "fp_delay": 21,
+   "setback_floors": 0
+  },
+  {
+   "id": "F6",
+   "uv": [
+    0.4,
+    0.5,
+    0.802,
+    0.928
+   ],
+   "floors": 9,
+   "grow": [
+    190,
+    206
+   ],
+   "floor_h": 3.2,
+   "fp_delay": 0,
+   "setback_floors": 0
+  },
+  {
+   "id": "F7",
+   "uv": [
+    0.701,
+    0.819,
+    0.765,
+    0.925
+   ],
+   "floors": 10,
+   "grow": [
+    172,
+    184
+   ],
+   "floor_h": 3.2,
+   "fp_delay": 3,
+   "antenna": 1
+  },
+  {
+   "id": "F8",
+   "uv": [
+    0.74,
+    0.95,
+    0.421,
+    0.639
+   ],
+   "floors": 8,
+   "grow": [
+    190,
+    206
+   ],
+   "floor_h": 3.2,
+   "fp_delay": 12,
+   "setback_floors": 0
+  }
+ ],
+ "details": {
+  "appear": [
+   194,
+   222
+  ],
+  "windows_per_face": 3,
+  "fill": 0.05
+ },
+ "loop": {
+  "from": 287
+ },
+ "height_scale": 0.8,
+ "vert_straighten": 0.85,
+ "vert_ground_ratio": 1.0,
+ "massing": {
+  "_doc": "كتل مقيسة: المساقط من رسومات المرجع على الأرض (الفريمات 168–182)، الأدوار تقدير بصري من الفريمات 196/238/270",
+  "occlude": 0.9,
+  "face_fill": 0.11,
+  "balcony": 0.8
+ },
+ "size": [
+  960,
+  540
+ ],
+ "retime": 2.7666666666666666,
+ "_fov_note": "track.json يعطي FOV رأسياً (42°) ← أفقي 68.62°"
+}
