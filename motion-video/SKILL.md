@@ -5,6 +5,8 @@ description: فيلم موشن قرافيكس ثلاثي الأبعاد بلا �
 
 # شرح بالموشن — فيلم من نص، بلا تصوير
 
+> 🎬 **سياسة الإنتاج الدائمة (AMAR Video Master):** اقرأ `${CLAUDE_SKILL_DIR}/../video-ad-editor/references/production-policy.md` أول كل مهمة جديدة — AI خيار لا شرط، حزمة طلب توليد جاهزة، بديل محلي تلقائي إن لم يتوفر AI، لا ريندر بالساعات، لا إنفاق دون موافقة، ودقة المواد الأصلية.
+
 **المحرّك مشترك** مع سكل الريل. كل `scripts/` و`references/` و`motion/` من هني:
 `${CLAUDE_SKILL_DIR}/../video-ad-editor`
 

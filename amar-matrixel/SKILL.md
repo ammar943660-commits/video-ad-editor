@@ -5,6 +5,8 @@ description: AMAR Matrixel Visual Reconstruction — محرك مستقل لإع�
 
 # AMAR Matrixel — مكتبة مؤثرات عقارية سينمائية
 
+> 🎬 **سياسة الإنتاج الدائمة (AMAR Video Master):** اقرأ `${CLAUDE_SKILL_DIR}/../video-ad-editor/references/production-policy.md` أول كل مهمة جديدة — AI خيار لا شرط، حزمة طلب توليد جاهزة، بديل محلي تلقائي إن لم يتوفر AI، لا ريندر بالساعات، لا إنفاق دون موافقة، ودقة المواد الأصلية.
+
 **المجلد:** `${CLAUDE_SKILL_DIR}` (= `amar-matrixel/`). **مستقل تماماً** عن `video-ad-editor/` وباقي المهارات: لا يعدّل ولا يستبدل شيئاً منها (يقرأ فقط three.js والخطوط العربية من `video-ad-editor/motion/`).
 
 > ⛔ **لا تدّعِ تطابقاً مع Matrixel ولا معرفة شفرته الداخلية.** هذه إعادة بناء مستقلة مستوحاة من مراجع مرئية. قل للمستخدم ذلك إن سأل.
