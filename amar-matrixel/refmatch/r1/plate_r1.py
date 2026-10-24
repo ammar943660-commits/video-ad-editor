@@ -5,7 +5,7 @@ import cv2,numpy as np,sys,os
 from scipy.ndimage import gaussian_filter1d
 W=sys.argv[1]; n=int(sys.argv[2]); H=np.load(f'{W}/H_r1.npy'); O=f'{W}/plate'; os.makedirs(O,exist_ok=True)
 f0=cv2.imread(f'{W}/frames/0001.png'); mk=np.zeros(f0.shape[:2],np.uint8); mk[585:625,995:1125]=255; f0=cv2.inpaint(f0,mk,5,cv2.INPAINT_TELEA)
-sel=np.zeros((644,1146),bool); sel[:60,:]=True; sel[60:330,:90]=True; sel[60:330,1060:]=True; sel[560:640,:900]=True
+sel=np.zeros((644,1146),bool); sel[:60,:]=True; sel[60:330,:90]=True; sel[60:330,1060:]=True; sel[560:640,:900]=True; sel[100:250,:300]=True; sel[90:260,880:]=True   # مبانٍ جانبية بلا مؤثرات (لدفء اللون)
 raw=[]; P=[]
 for i in range(n):
     p=cv2.warpPerspective(f0,H[i],(1146,644),flags=cv2.INTER_CUBIC,borderMode=cv2.BORDER_REPLICATE); raw.append(p)

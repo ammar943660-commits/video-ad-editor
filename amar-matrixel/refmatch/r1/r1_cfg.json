@@ -1,6 +1,6 @@
 {
  "font": "/home/user/video-ad-editor/amar-matrixel/refmatch/fonts_tmp/baloobhaijaan2-800-full.ttf",
- "sun_energy": 3.5,
+ "sun_energy": 4.0,
  "sun_angle": 4,
  "sun_color": [
   1.0,
@@ -17,7 +17,7 @@
   0.72,
   0.66
  ],
- "sky_strength": 1.6,
+ "sky_strength": 0.9,
  "concrete": [
   0.32,
   0.32,
@@ -30,11 +30,11 @@
  "material": "gold",
  "gold": {
   "base": [
-   0.95,
-   0.56,
-   0.17
+   0.92,
+   0.5,
+   0.12
   ],
-  "rough": 0.24,
+  "rough": 0.16,
   "bump": 0.12,
   "scale": 5.0
  },

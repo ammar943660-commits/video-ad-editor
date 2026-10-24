@@ -6,7 +6,10 @@ W,LD,O=sys.argv[1:4]; rest=sys.argv[4:]; cmp_=rest[0] if rest and rest[0].endswi
 os.makedirs(O,exist_ok=True); H=np.load(f'{W}/H_r1.npy'); D=os.path.dirname(os.path.abspath(__file__)); RG=json.load(open(f'{D}/r1_cfg.json')).get('ring',{"f":[266,292],"center":[555,300],"rx":[60,700],"ry":[20,230]})
 rows=[]
 for i in fs:
-    p=cv2.imread(f'{W}/plate/{i+1:04d}.png').astype(np.float32); b=cv2.imread(f'{LD}/{i+1:04d}.png',-1)
+    p=cv2.imread(f'{W}/plate/{i+1:04d}.png').astype(np.float32)
+    rf=cv2.imread(f'{W}/frames/{i+1:04d}.png').astype(np.float32); reg=(slice(100,250),slice(0,300))   # تصحيح لوني متبقٍّ من المرجع (مبانٍ بلا مؤثرات)
+    g=np.median(rf[reg].reshape(-1,3),0)/np.maximum(np.median(p[reg].reshape(-1,3),0),1); p=p*np.clip(g,0.8,1.4)
+    b=cv2.imread(f'{LD}/{i+1:04d}.png',-1)
     if b is not None:
         if b.shape[:2]!=p.shape[:2]: b=cv2.resize(b,(p.shape[1],p.shape[0]),interpolation=cv2.INTER_CUBIC)
         b=cv2.warpPerspective(b,H[i],(p.shape[1],p.shape[0]),flags=cv2.INTER_LINEAR); al=b[:,:,3:4].astype(np.float32)/255; p=p*(1-al)+b[:,:,:3].astype(np.float32)*al

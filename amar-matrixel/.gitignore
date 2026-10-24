@@ -18,3 +18,4 @@ projects/*/*/export/
 !projects/matrix/plate_*/plate.mp4
 previews/camera/_*
 refmatch/fonts_tmp/
+refmatch/*/ae_export/plates/
