@@ -11,8 +11,12 @@ from mathutils import Euler,Quaternion,Matrix,Vector
 W=S.W; fi=S.fi; out=S.out; samples=S.samples; cfg=S.cfg; CAM=S.CAM; seq=cfg['seq']; FPS=30.0
 sc=S.setup_scene(fi)
 if os.environ.get('AMX_NOGROUND'): bpy.data.objects['GROUND'].hide_render=True
-CONC=concrete(base=tuple(cfg['concrete']),bump=cfg['bump'],scale=cfg['noise_scale']/9*4)
-CONCD=concrete(base=tuple(c*0.42 for c in cfg['concrete']),bump=cfg['bump']*1.4,scale=cfg['noise_scale']/9*4)
+if cfg.get('material')=='gold':
+    CONC=gold_material(**cfg.get('gold',{})); CONCD=gold_material(**dict(cfg.get('gold',{}),rough=cfg.get('gold',{}).get('rough',0.22)+0.08))
+else:
+    CONC=concrete(base=tuple(cfg['concrete']),bump=cfg['bump'],scale=cfg['noise_scale']/9*4)
+    CONCD=concrete(base=tuple(c*0.42 for c in cfg['concrete']),bump=cfg['bump']*1.4,scale=cfg['noise_scale']/9*4)
+for _x in cfg.get('extras',[]): exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),_x)).read())
 ease=lambda v:1-(1-min(max(v,0),1))**3
 def plane_xf(b):
     pl=b['plane']; C=S.cam_matrix(CAM['frames'][b['ref_frame']])[:3,3]; zc=b.get('zc',0.0); k=C[2]/(C[2]-zc)
@@ -43,8 +47,9 @@ def add_piece(P,b,loc,k,Rp,i,f,rnd):
     else:
         t=(f-ex[0])/FPS-dly*0.3*0
         t=max(t-dly*0.35,0.0); g=9.8*b.get('gscale',1.0)
+        if t>b.get('debris_life',1e9)*(0.6+0.8*rn): return None
         # محاكاة تحليلية بخطوات: ارتداد واحد ثم استقرار
-        vel=Vector((hv.x,hv.y,vup)); p=rest.copy(); tt=0.0; dt=1/FPS; landed=False; zl=th*0.45; land_t=None; keep=rnd.random()<0.65
+        vel=Vector((hv.x,hv.y,vup)); p=rest.copy(); tt=0.0; dt=1/FPS; landed=False; zl=th*0.45; land_t=None; keep=rnd.random()<b.get('keep',0.65)
         n=int(t*FPS)
         for s_ in range(n):
             vel.z-=g*dt; p=p+vel*dt
@@ -70,6 +75,11 @@ def build():
     rr=random.Random(seq.get('seed',7)); depth_total=0
     for bi,b in enumerate(cfg['beats'][:4]):
         loc,k,Rp=plane_xf(b); PJ=json.load(open(b['pieces'])); tf0,tf1=b['form']; ex=b.get('explode')
+        if b.get('end') is not None and fi>=b['end']: continue
+        if b.get('form_style')=='rise' and tf0<=fi<b.get('settle',tf1):   # يرتفع من بركة السائل (R1): مقياس رأسي بارتداد مرن
+            u=(fi-tf0)/max(b.get('settle',tf1)-tf0,1); e=1-math.exp(-5*u)*math.cos(9*u); e=max(e,0.02)
+            ob=parts_object(PJ['whole'],depth=b['depth_m'],bevel=b.get('bevel_m',0.08),name=f'WHOLE{bi}'); ob.data.materials.append(CONC)
+            ob.rotation_mode='QUATERNION'; ob.rotation_quaternion=Rp.to_quaternion(); ob.location=Vector(loc); ob.scale=(k*(0.85+0.15*min(e,1)),k*e,k); continue
         if b.get('settle',tf1)<=fi and (ex is None or fi<ex[0]):   # نص كامل
             ob=parts_object(PJ['whole'],depth=b['depth_m'],bevel=b.get('bevel_m',0.08),name=f'WHOLE{bi}'); ob.data.materials.append(CONC)
             ob.rotation_mode='QUATERNION'; ob.rotation_quaternion=Rp.to_quaternion(); ob.location=Vector(loc); ob.scale=(k,k,k); continue
@@ -113,6 +123,7 @@ def rocks():
         t0=b['form'][0]
         if fi<t0: continue
         loc,k,Rp=plane_xf(b); Wm=b['plane']['width_m']*k; nx=-(Rp@Vector((0,0,1))).normalized(); ux=Rp@Vector((1,0,0))
+        if b.get('no_rocks'): continue
         rr=random.Random(bi*7777+3)
         for j in range(R.get('n',70)):
             u=rr.uniform(0,1)*Wm; v=rr.uniform(*R.get('v',(-5,2))); sz=rr.uniform(*R.get('size',(0.4,1.4)))*(1+0.8*rr.random()**3); dly=rr.uniform(0,0.4)
@@ -122,6 +133,10 @@ def rocks():
             bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1,radius=1.0,location=(base.x,base.y,z)); ob=bpy.context.object
             ob.scale=(sz*rr.uniform(0.7,1.3),sz*rr.uniform(0.7,1.3),sz*rr.uniform(0.45,0.9)); ob.rotation_euler=(rr.uniform(-.4,.4),rr.uniform(-.4,.4),rr.uniform(0,6.28)); ob.data.materials.append(CONCD)
             for p in ob.data.polygons: p.use_smooth=False
+pre_hooks=globals().get('PRE_HOOKS',[])
+for _h in pre_hooks: _h()
 build(); print('t_build',round(time.time()-T0,1),flush=True); rocks() if not os.environ.get('AMX_NOROCK') else None; print('t_rocks',round(time.time()-T0,1),flush=True); (dust() if not os.environ.get('AMX_NODUST') else None); print('t_dust',round(time.time()-T0,1),flush=True)
 sc.cycles.volume_bounces=int(os.environ.get('AMX_VB','3')); sc.cycles.volume_step_rate=float(os.environ.get('AMX_VS','2.0')); sc.cycles.volume_preview_step_rate=sc.cycles.volume_step_rate; sc.cycles.volume_max_steps=int(os.environ.get('AMX_VM','64'))
-sc.render.filepath=out; bpy.ops.render.render(write_still=True); print('rendered',out,'frame',fi,'t',round(time.time()-T0,1))
+sc.render.filepath=out
+if os.environ.get('AMX_SAVE'): bpy.ops.wm.save_as_mainfile(filepath=os.environ['AMX_SAVE'])   # مشروع Blender قابل للتعديل لهذا الفريم
+if not os.environ.get('AMX_NORENDER'): bpy.ops.render.render(write_still=True); print('rendered',out,'frame',fi,'t',round(time.time()-T0,1))

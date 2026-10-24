@@ -137,3 +137,13 @@ def dust_field(puffs, color=(1.0,0.96,0.9), noise_scale=1.5, detail=5.0, domain=
     (x0,y0,z0),(x1,y1,z1)=domain
     me=bpy.data.meshes.new(name); vs_=[(x,y,z) for x in (x0,x1) for y in (y0,y1) for z in (z0,z1)]; fs=[(0,1,3,2),(4,6,7,5),(0,4,5,1),(2,3,7,6),(0,2,6,4),(1,5,7,3)]; me.from_pydata(vs_,[],fs); me.update()
     ob=bpy.data.objects.new(name,me); bpy.context.scene.collection.objects.link(ob); ob.data.materials.append(m); return ob
+
+def gold_material(name='GOLD', base=(1.0,0.70,0.28), rough=0.22, bump=0.15, scale=6.0):
+    """ذهب سائل/مصقول: Principled معدني + تموّج ضوضاء خفيف في الخشونة والنتوء (يشبه سطح مصبوب)."""
+    m=bpy.data.materials.new(name); m.use_nodes=True; nt=m.node_tree; nt.nodes.clear(); L=nt.links
+    out=nt.nodes.new('ShaderNodeOutputMaterial'); bs=nt.nodes.new('ShaderNodeBsdfPrincipled'); bs.inputs['Base Color'].default_value=tuple(base)+(1,); bs.inputs['Metallic'].default_value=1.0
+    tc=nt.nodes.new('ShaderNodeTexCoord'); n1=nt.nodes.new('ShaderNodeTexNoise'); n1.inputs['Scale'].default_value=scale; n1.inputs['Detail'].default_value=4
+    L.new(tc.outputs['Object'],n1.inputs['Vector'])
+    mr=nt.nodes.new('ShaderNodeMapRange'); mr.inputs[3].default_value=rough*0.6; mr.inputs[4].default_value=rough*1.5; L.new(n1.outputs['Fac'],mr.inputs['Value']); L.new(mr.outputs['Result'],bs.inputs['Roughness'])
+    bp=nt.nodes.new('ShaderNodeBump'); bp.inputs['Strength'].default_value=bump; L.new(n1.outputs['Fac'],bp.inputs['Height']); L.new(bp.outputs['Normal'],bs.inputs['Normal'])
+    L.new(bs.outputs['BSDF'],out.inputs['Surface']); return m

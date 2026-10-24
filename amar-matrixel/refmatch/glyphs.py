@@ -20,7 +20,7 @@ def outlines(text,font_path,wght=900,rtl=None,lang='ar',script='Arab',n_curve=6,
     if rtl is None: rtl=any('؀'<=c<='ۿ' for c in text)
     buf=hb.Buffer(); buf.add_str(text); buf.guess_segment_properties()
     if rtl: buf.direction='rtl'; buf.script=script; buf.language=lang
-    hb.shape(font,buf,{'kern':True,'liga':True,'calt':True,'rlig':True,'init':True,'medi':True,'fina':True,'isol':True})
+    hb.shape(font,buf,{})   # الميزات الافتراضية؛ فرض init/medi/fina/isol معاً يكسر الوصل
     x=0; contours=[]
     for info,pos in zip(buf.glyph_infos,buf.glyph_positions):
         name=order[info.codepoint]; pen=DecomposingRecordingPen(gs); gs[name].draw(pen); cur=[]; start=None
@@ -71,3 +71,23 @@ if __name__=='__main__':
     import sys
     F='/home/user/video-ad-editor/video-ad-editor/motion/fonts/NotoKufiArabic-VF.ttf'
     c,xr,yr=outlines('ارض للبيع',F); print(len(c),xr,yr)
+
+def bidi_runs(line):
+    """يفصل سطراً مختلطاً إلى مقاطع اتجاه (عربي/غير عربي) بترتيب العرض من اليسار لليمين لسطر RTL (يكفي للأرقام/الرموز داخل نص عربي)."""
+    import re
+    ar=lambda c:'\u0600'<=c<='\u06ff'
+    if not any(ar(c) for c in line): return [(line,False)]
+    runs=[]; cur=''; cur_ar=None
+    for c in line:
+        a=ar(c) if c!=' ' else cur_ar
+        if cur_ar is None or a==cur_ar: cur+=c; cur_ar=a if cur_ar is None else cur_ar
+        else: runs.append((cur,cur_ar)); cur=c; cur_ar=a
+    runs.append((cur,cur_ar)); return [(t,a) for t,a in reversed(runs) if t.strip()]
+def outlines_mixed(line,font_path,wght=None,space=0.25):
+    """سطر مختلط → كنتورات متتالية بصرياً (كل مقطع مُشكَّل باتجاهه)."""
+    out=[]; x=0; ys=[]
+    for t,a in bidi_runs(line):
+        cs,xr,yr=outlines(t.strip(),font_path,wght,rtl=a,lang='ar' if a else 'en',script='Arab' if a else 'Latn')
+        for c in cs: out.append([(p[0]-xr[0]+x,p[1]) for p in c])
+        x+=xr[1]-xr[0]+space; ys+=list(yr)
+    return out,(0,x-space),(min(ys),max(ys))

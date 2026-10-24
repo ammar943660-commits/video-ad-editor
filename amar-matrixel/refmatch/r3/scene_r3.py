@@ -6,7 +6,7 @@ sys.path.insert(0,os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
 from bl_common import *
 import numpy as np, random
 W=sys.argv[1]; fi=int(sys.argv[2]); out=sys.argv[3] if len(sys.argv)>3 else f'{W}/render_{fi}.png'; samples=int(sys.argv[4]) if len(sys.argv)>4 else 48
-CAM=json.load(open(f"{W}/{os.environ.get('AMX_CAM','camera.json')}")); cfg=json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'scene_cfg.json')))
+CAM=json.load(open(f"{W}/{os.environ.get('AMX_CAM','camera.json')}")); cfg=json.load(open(os.environ.get('AMX_CFG',os.path.join(os.path.dirname(os.path.abspath(__file__)),'scene_cfg.json'))))
 def cam_matrix(fr):
     R=np.array(fr['R']).reshape(3,3); t=np.array(fr['t']); D=np.diag([1,-1,-1.]); F=np.diag([1,-1,-1.])
     V=np.eye(4); V[:3,:3]=F@R@D; V[:3,3]=F@t; return np.linalg.inv(V)
@@ -14,7 +14,7 @@ def setup_scene(fi, text_cfg=None):
     sc=reset(); sc.render.resolution_x=CAM['width']; sc.render.resolution_y=CAM['height']; sc.render.resolution_percentage=int(os.environ.get('AMX_RES','100'))
     sc.view_settings.view_transform='Standard'; sc.view_settings.look='None'; sc.cycles.samples=samples; sc.cycles.use_denoising=True; sc.render.film_transparent=True; sc.cycles.film_exposure=1.0
     cam=bpy.data.cameras.new('cam'); cam.sensor_fit='HORIZONTAL'; cam.sensor_width=36; cam.lens=18/math.tan(math.radians(CAM['fov_deg'])/2); cam.clip_start=0.5; cam.clip_end=2000
-    co=bpy.data.objects.new('cam',cam); sc.collection.objects.link(co); sc.camera=co; co.matrix_world=Matrix(cam_matrix(CAM['frames'][fi]).tolist())
+    co=bpy.data.objects.new('cam',cam); sc.collection.objects.link(co); sc.camera=co; co.matrix_world=Matrix(cam_matrix(CAM['frames'][int(os.environ.get('AMX_FIXCAM',fi))]).tolist())
     # أرضية Shadow Catcher
     bpy.ops.mesh.primitive_plane_add(size=1000); g=bpy.context.object; g.name='GROUND'; g.is_shadow_catcher=True; g.location.z=float(os.environ.get('AMX_GZ','0')); g.hide_render=bool(os.environ.get('AMX_NOGROUND'))
     # إضاءة: شمس + سماء
