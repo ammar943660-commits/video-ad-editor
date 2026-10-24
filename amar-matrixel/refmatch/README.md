@@ -24,3 +24,16 @@ cd r1 && ./render1.sh <work> 50 12
 # R5
 cd r5 && /tmp/bpyenv/bin/python render_r5.py <work> <out> 0 303 && python3 export_ae.py <work> ae_export
 ```
+
+## استخدام R4/R5 على عقار جديد (مختبر على لقطات اختبار تركيبية، 24 أكتوبر)
+```bash
+# R4 — لقطة أرض + رباعي القطعة في أول فريم (TL,TR,BR,BL). مع track.json جاهز أو تتبع SIFT تلقائي
+python3 r4/reuse_new_property.py plate.mp4 <work> '[[x,y],...]' [track.json]
+cp r4/examples/r4_cfg_newprop.json <work>/   # عدّل: size، fov_deg (أفقي!)، lot_m، area_text.text، المباني، retime=332/عدد_الفريمات
+R4CFG=<work>/r4_cfg_newprop.json /tmp/bpyenv/bin/python r4/holo.py <work> <work>/holo 0 <n-1>
+python3 r4/comp4.py <work> <work>/holo <work>/final $(seq -s ' ' 0 <n-1>)          # ≈30 ث لـ4 ث فيديو
+# R5 — صورة الواجهة + edges.json (tools/detect_edges.py) + رباعي الواجهة
+python3 r5/reuse_new_property.py facade.png edges.json '[[x,y],...]' <work> [--night night.png] --texts "فيلا للبيع|300 متر|في جدة|تواصل معنا\n+966..."
+R5CFG=<work>/r5_cfg_newprop.json /tmp/bpyenv/bin/python r5/render_r5.py <work> <work>/final 0 303   # ≈1 د
+```
+ملاحظات: R5 بلا صورة ليل حقيقية يستخدم «تقريب ليلي محلي» (تعتيم وتدريج) — الأفضل صورة ليل مصوّرة أو مولّدة بـAI (حزمة طلب). R5 يفترض كاميرا ثابتة.

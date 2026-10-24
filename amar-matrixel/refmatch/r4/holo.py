@@ -6,7 +6,7 @@ import cv2,numpy as np,json,sys,os,math
 sys.path.insert(0,os.path.join(os.path.dirname(os.path.abspath(__file__)),'..'))
 W,OUT=sys.argv[1:3]; f0,f1=int(sys.argv[3]),int(sys.argv[4]); SC=float(sys.argv[5]) if len(sys.argv)>5 else 1.0; os.makedirs(OUT,exist_ok=True)
 D=os.path.dirname(os.path.abspath(__file__)); C=json.load(open(os.environ.get('R4CFG',f'{D}/r4_cfg.json')))
-TR=json.load(open(f'{W}/lot_track.json'))['snapped']; w,h=1146,644; LW,LH=C['lot_m']
+TR=json.load(open(f'{W}/lot_track.json'))['snapped']; w,h=C.get('size',[1146,644]); LW,LH=C['lot_m']
 f=(w/2)/math.tan(math.radians(C['fov_deg'])/2); K=np.array([[f,0,w/2],[0,f,h/2],[0,0,1]])
 ease=lambda x:1-(1-min(max(x,0),1))**3
 def ramp(fr,a,b): return min(max((fr-a)/max(b-a,1e-6),0),1)
@@ -43,8 +43,11 @@ def text_contours():
     return _txt
 def render(fr):
     src=fr-C['loop']['from'] if fr>=C['loop']['from'] else fr
-    H,R,t=cam(min(src,len(TR)-1)); S=2; ss=S*16
-    q_=np.float32(TR[min(src,len(TR)-1)]); GS[0]=math.sqrt(abs(cv2.contourArea(q_))/(LW*LH))
+    ci=min(src,len(TR)-1)
+    if C.get('retime'):   # لقطة عقار جديدة: الكاميرا من فريم اللقطة نفسه، وتوقيت المؤثر يُمدّ/يُضغط على طولها
+        ci=min(fr,len(TR)-1); src=int(round(fr*C['retime']))
+    H,R,t=cam(ci); S=2; ss=S*16
+    q_=np.float32(TR[ci]); GS[0]=math.sqrt(abs(cv2.contourArea(q_))/(LW*LH))
     core=np.zeros((h*S,w*S),np.float32); fill=np.zeros((h*S,w*S),np.float32)
     def line(P,a,th=2): 
         if a<=0.01: return
@@ -60,7 +63,7 @@ def render(fr):
             if L<=k: break
             a_,b_=np.array(g[k]),np.array(g[(k+1)%4]); u=min(L-k,1); pts.append(tuple(a_+(b_-a_)*u))
         line(pts,1.0,2.2)
-        wh=O['wall_h']*ease(ramp(src,*O['wall_rise']))*(1-ramp(src,*O.get('wall_fade',[1e9,1e9+1])))
+        wh=O['wall_h']*ease(ramp(src,*O['wall_rise']))*(1-ramp(src,*O.get('wall_fade',[1e9,1e9+1])))+O['wall_h']*ease(ramp(src,*O.get('wall_rise2',[1e9,1e9+1])))
         if wh>0.05:
             top=[(x,y,wh) for x,y,_ in g]; line(top+[top[0]],0.85,1.6)
             for k in range(4): line([g[k],top[k]],0.9,1.6)
@@ -156,8 +159,9 @@ def draw_massing(src,R,t,core,fill,ss,S,Fp,Dt,line):
         if shr!=1.0:
             u0,u1,v0,v1=B['uv']; cu,cv=(u0+u1)/2,(v0+v1)/2; B=dict(B,uv=[cu+(u0-cu)*shr,cu+(u1-cu)*shr,cv+(v0-cv)*shr,cv+(v1-cv)*shr])
         u0,u1,v0,v1=B['uv']; x0,x1,y0,y1=u0*LW,u1*LW,v0*LH,v1*LH
-        if Fp>0:
-            per=[(x0,y0,0),(x1,y0,0),(x1,y1,0),(x0,y1,0),(x0,y0,0)]; L=4*Fp; pts=[per[0]]
+        Fpb=ease(ramp(src,C['footprints']['draw'][0]+B.get('fp_delay',0),C['footprints']['draw'][1]+B.get('fp_delay',0)))
+        if Fpb>0:
+            per=[(x0,y0,0),(x1,y0,0),(x1,y1,0),(x0,y1,0),(x0,y0,0)]; L=4*Fpb; pts=[per[0]]
             for k in range(4):
                 if L<=k: break
                 a_,b_=np.array(per[k]),np.array(per[k+1]); pts.append(tuple(a_+(b_-a_)*min(L-k,1)))

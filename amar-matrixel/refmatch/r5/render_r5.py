@@ -79,7 +79,10 @@ for f in range(f0,f1+1):
                 c=tuple(np.round(lp[-1]*SS*16).astype(int)); cv2.circle(core,c,int(5*SS*16),1.0,-1,cv2.LINE_AA,4); cv2.circle(core,c,int((9+1.5*math.sin(f*0.3))*SS*16),0.6,max(1,int(1.2*SS)),cv2.LINE_AA,4)
         tu=rmp(f,cd['appear'][0]+cd.get('text_delay',5),cd['appear'][1]+cd.get('text_delay',5)-5)
         if tu>0:
-            tm=text_mask(cd['text'],cd['text_h']); th_,tw_=tm.shape; cx=(x0+x1)//2-tw_//2; cy=(y0+y1)//2-th_//2+2
+            tm=text_mask(cd['text'],cd['text_h']); th_,tw_=tm.shape
+            if tw_>0.9*(x1-x0) or th_>0.92*(y1-y0):   # النص لا يتجاوز البطاقة
+                k_=min(0.9*(x1-x0)/tw_,0.92*(y1-y0)/th_); tm=cv2.resize(tm,(max(1,int(tw_*k_)),max(1,int(th_*k_))),interpolation=cv2.INTER_AREA); th_,tw_=tm.shape
+            cx=(x0+x1)//2-tw_//2; cy=(y0+y1)//2-th_//2+2
             ya,yb=max(cy,0),min(cy+th_,H); xa,xb=max(cx,0),min(cx+tw_,Wd); txt[ya:yb,xa:xb]=np.maximum(txt[ya:yb,xa:xb],tm[ya-cy:yb-cy,xa-cx:xb-cx]*tu)
     core=cv2.resize(core,(Wd,H),interpolation=cv2.INTER_AREA)
     pc=np.array(C['panel']['fill'],np.float32); al=pan[...,None]*C['panel']['alpha']

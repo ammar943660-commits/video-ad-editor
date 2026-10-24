@@ -44,7 +44,15 @@
    301
   ],
   "wall_fill": 0.05,
-  "posts": 6.0
+  "posts": 6.0,
+  "wall_fade": [
+   140,
+   160
+  ],
+  "wall_rise2": [
+   206,
+   222
+  ]
  },
  "area_text": {
   "text": "2500m²",
@@ -83,10 +91,11 @@
    ],
    "floors": 8,
    "grow": [
-    176,
-    200
+    190,
+    206
    ],
    "floor_h": 3.2,
+   "fp_delay": 18,
    "setback_floors": 0
   },
   {
@@ -97,13 +106,14 @@
     0.094,
     0.236
    ],
-   "floors": 9,
+   "floors": 10,
    "grow": [
-    170,
-    190
+    172,
+    184
    ],
    "floor_h": 3.2,
-   "setback_floors": 0
+   "fp_delay": 9,
+   "antenna": 1
   },
   {
    "id": "F3",
@@ -115,10 +125,11 @@
    ],
    "floors": 8,
    "grow": [
-    176,
-    200
+    190,
+    206
    ],
    "floor_h": 3.2,
+   "fp_delay": 6,
    "setback_floors": 0
   },
   {
@@ -131,10 +142,11 @@
    ],
    "floors": 7,
    "grow": [
-    176,
-    200
+    190,
+    206
    ],
    "floor_h": 3.2,
+   "fp_delay": 15,
    "setback_floors": 0
   },
   {
@@ -147,18 +159,19 @@
    ],
    "floors": 1,
    "grow": [
-    182,
-    196
+    194,
+    204
    ],
    "floor_h": 3.2,
-   "setback_floors": 0,
    "balconies": false,
    "pilotis": false,
    "floors_late": 7,
    "grow_late": [
     204,
     236
-   ]
+   ],
+   "fp_delay": 21,
+   "setback_floors": 0
   },
   {
    "id": "F6",
@@ -168,13 +181,14 @@
     0.802,
     0.928
    ],
-   "floors": 10,
+   "floors": 9,
    "grow": [
-    168,
-    186
+    190,
+    206
    ],
    "floor_h": 3.2,
-   "antenna": 1
+   "fp_delay": 0,
+   "setback_floors": 0
   },
   {
    "id": "F7",
@@ -186,10 +200,11 @@
    ],
    "floors": 10,
    "grow": [
-    168,
-    186
+    172,
+    184
    ],
    "floor_h": 3.2,
+   "fp_delay": 3,
    "antenna": 1
   },
   {
@@ -202,10 +217,11 @@
    ],
    "floors": 8,
    "grow": [
-    176,
-    200
+    190,
+    206
    ],
    "floor_h": 3.2,
+   "fp_delay": 12,
    "setback_floors": 0
   }
  ],
@@ -237,7 +253,7 @@
   ],
   "v": [
    0.65,
-   1.15
+   1.0
   ]
  },
  "shrink_keys": {

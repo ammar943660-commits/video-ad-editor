@@ -30,6 +30,13 @@ SKROOT="$(cd "$(dirname "$0")/.." && pwd)"; LOCALV="$(cat "$SKROOT/VERSION" 2>/d
 # v4: لو السكل منصّب كـplugin (majed-video) التحديث يكون من مدير الإضافات — مو بالاستبدال اليدوي
 case "$SKROOT" in */.claude/plugins/*) PLUGIN=1 ;; *) PLUGIN=0 ;; esac
 PLUG_UPD="claude plugin marketplace update majed-video && claude plugin update majed-video@majed-video"
+# 🛡️ AMAR (نسخة معدَّلة): التحديث من المستودع الأصلي يستبدل الملفات بـrsync --delete فيحذف سياسة الإنتاج وإضافات AMAR.
+#    لا تحديث من الأصل إلا بـ --force-upstream (وبعد أخذ نسخة احتياطية). التنبيه بوجود إصدار أحدث يبقى للعلم فقط.
+AMAR_FORK=0; [ -f "$SKROOT/references/production-policy.md" ] && AMAR_FORK=1
+if [ "$1" = "--update" ] && [ "$AMAR_FORK" = 1 ]; then
+  echo "🛡️ هذه نسخة AMAR معدَّلة — التحديث من المستودع الأصلي سيحذف إضافاتها (production-policy وغيرها). لم أحدّث. للتحديث رغم ذلك: bash scripts/00_setup.sh --force-upstream (بعد نسخة احتياطية)"; exit 0
+fi
+[ "$1" = "--force-upstream" ] && set -- --update
 if [ "$1" = "--update" ] && [ "$PLUGIN" = 1 ]; then
   echo "ℹ️ السكل منصّب كـplugin — شغّل: $PLUG_UPD  (ثم افتح جلسة جديدة)"; exit 0
 fi
@@ -44,7 +51,9 @@ if [ "$1" = "--update" ]; then
 fi
 LATEST="$(curl -sL -m 5 https://api.github.com/repos/majedphotos/video-ad-editor/releases/latest 2>/dev/null | sed -n 's/.*"tag_name": *"v\([0-9.]*\)".*/\1/p' | head -1)"
 if [ -n "$LATEST" ] && [ "$LATEST" != "$LOCALV" ] && [ "$(printf '%s\n%s' "$LOCALV" "$LATEST" | sort -V | tail -1)" = "$LATEST" ]; then
-  if [ "$PLUGIN" = 1 ]; then
+  if [ "$AMAR_FORK" = 1 ]; then
+    echo "ℹ️ يوجد إصدار أصلي أحدث v$LATEST (عندك v$LOCALV) — نسخة AMAR معدَّلة: لا تعرض التحديث على المستخدم؛ الدمج اليدوي فقط حتى لا تُحذف الإضافات."
+  elif [ "$PLUGIN" = 1 ]; then
     echo "🆕 فيه إصدار أحدث من السكل: v$LATEST (عندك v$LOCALV) — اسأل المستخدم، ولو وافق شغّل: $PLUG_UPD  (ثم جلسة جديدة)"
   else
     echo "🆕 فيه إصدار أحدث من السكل: v$LATEST (عندك v$LOCALV) — اسأل المستخدم، ولو وافق شغّل: bash scripts/00_setup.sh --update"
