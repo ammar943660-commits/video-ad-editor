@@ -2,7 +2,8 @@
 """scene_seq.py — مشهد R3 الكامل لفريم واحد: توالي أربع جمل (تجمّع الشظايا ← نص كامل ← انفجار ← ركام باقٍ) + غبار حدثي + أرضية Shadow Catcher.
    AMX_CAM=camera_true.json /tmp/bpyenv/bin/python scene_seq.py <work> <frame> <out.png> [samples]
    كل الحالات دالة تحليلية للفريم (بلا كاش/محاكاة)، فيُرسم أي فريم مستقلاً. ملاحظة: إحداثيات الشظايا من fracture.py (pieces JSON)."""
-import sys,os,json,math,random
+import sys,os,json,math,random,time
+T0=time.time()
 import numpy as np
 import scene_r3 as S
 from bl_common import *
@@ -43,7 +44,7 @@ def add_piece(P,b,loc,k,Rp,i,f,rnd):
         t=(f-ex[0])/FPS-dly*0.3*0
         t=max(t-dly*0.35,0.0); g=9.8*b.get('gscale',1.0)
         # محاكاة تحليلية بخطوات: ارتداد واحد ثم استقرار
-        vel=Vector((hv.x,hv.y,vup)); p=rest.copy(); tt=0.0; dt=1/FPS; landed=False; zl=th*0.45; land_t=None; keep=rnd.random()<0.3
+        vel=Vector((hv.x,hv.y,vup)); p=rest.copy(); tt=0.0; dt=1/FPS; landed=False; zl=th*0.45; land_t=None; keep=rnd.random()<0.65
         n=int(t*FPS)
         for s_ in range(n):
             vel.z-=g*dt; p=p+vel*dt
@@ -78,10 +79,17 @@ def build():
             r=add_piece(P,b,loc,k,Rp,i,fi,rnd)
             if r is None: continue
             pos,rot,scl,th=r
+            if ex is not None and fi>=ex[0]+b.get('boulder_after',2):   # بعد الانفجار: صخرة ثلاثية الأبعاد بحجم الشظية (المرجع: كتل مكعّبة داكنة)
+                rb=random.Random(bi*31337+i); s_=math.sqrt(P['area'])*k*b.get('boulder_scale',0.8)
+                bpy.ops.mesh.primitive_cube_add(size=1.0,location=pos); ob=bpy.context.object
+                bv=ob.modifiers.new('bv','BEVEL'); bv.width=0.06; bv.segments=1
+                ob.scale=(s_*rb.uniform(0.75,1.25),s_*rb.uniform(0.65,1.1),s_*rb.uniform(0.5,0.95)); ob.rotation_mode='QUATERNION'; ob.rotation_quaternion=rot; ob.data.materials.append(CONCD)
+                for pp in ob.data.polygons: pp.use_smooth=False
+                continue
             ob=parts_object([{'outer':P['outer'],'holes':P['holes']}],depth=th/k,bevel=b.get('bevel_m',0.08)*0.8,name=f'P{bi}_{i}'); ob.data.materials.append(CONCD)
             ob.rotation_mode='QUATERNION'; ob.rotation_quaternion=rot; ob.location=pos; ob.scale=(k*scl,)*3
 def dust():
-    D=seq['dust']
+    D=seq['dust']; P=[]
     for ei,e in enumerate(seq['events']):
         a=(fi-e['f'])/FPS
         if a<0: continue
@@ -89,12 +97,16 @@ def dust():
         Wm=b['plane']['width_m']*k
         for j in range(e['n']):
             u=rr.uniform(*e.get('u',(0,1)))*Wm; v=rr.uniform(*e['v']); z0=rr.uniform(*e['z']); r0=rr.uniform(*e['r']); sp=rr.uniform(0.3,1.0)*e.get('spread',3.0); vz=rr.uniform(0.2,1.0)*e.get('rise',2.0); ph=rr.uniform(0,6.28)
-            base=Vector(loc)+Rp@Vector((u,0,0))+Vector((0,0,0)); nx=-(Rp@Vector((0,0,1))).normalized()   # عمودي المستوى
+            base=Vector(loc)+Rp@Vector((u,0,0)); nx=-(Rp@Vector((0,0,1))).normalized()
             c=base+nx*v; c.z=0
             pos=c+Vector((math.cos(ph),math.sin(ph),0))*sp*a**0.8+Vector((0,0,z0+vz*a**0.6)); r=r0*(1+e.get('grow',0.7)*math.sqrt(a))
-            dens=e['density']*math.exp(-a/e['tau'])*min(1.0,a/0.12+0.15)
-            if dens<0.12: continue
-            add_puff((pos.x,pos.y,pos.z),r,dust_mat(dens,j),squash=rr.uniform(0.7,1.0),rot=rr.random()*6)
+            dens=e['density']*math.exp(-a/e['tau'])*min(1.0,a/e.get('ramp',0.12)+0.15)
+            if dens<seq['dust'].get('cutoff',0.3): continue
+            P.append((pos.x,pos.y,pos.z,r,dens))
+    if not P: return
+    xs=[p[0] for p in P]; ys=[p[1] for p in P]; zs=[p[2] for p in P]; rm=max(p[3] for p in P)*1.2
+    dom=((min(xs)-rm,min(ys)-rm,0),(max(xs)+rm,max(ys)+rm,max(zs)+rm))
+    dust_field(P,color=tuple(D['color']),noise_scale=D.get('noise',1.5),detail=D.get('detail',5.0),domain=dom,gain=D.get('gain',1.0))
 def rocks():
     R=seq.get('rocks',{})
     for bi,b in enumerate(cfg['beats'][:4]):
@@ -110,6 +122,6 @@ def rocks():
             bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1,radius=1.0,location=(base.x,base.y,z)); ob=bpy.context.object
             ob.scale=(sz*rr.uniform(0.7,1.3),sz*rr.uniform(0.7,1.3),sz*rr.uniform(0.45,0.9)); ob.rotation_euler=(rr.uniform(-.4,.4),rr.uniform(-.4,.4),rr.uniform(0,6.28)); ob.data.materials.append(CONCD)
             for p in ob.data.polygons: p.use_smooth=False
-build(); rocks(); dust()
-sc.cycles.volume_bounces=3; sc.cycles.volume_step_rate=2.0; sc.cycles.volume_preview_step_rate=2.0; sc.cycles.volume_max_steps=64
-sc.render.filepath=out; bpy.ops.render.render(write_still=True); print('rendered',out,'frame',fi)
+build(); print('t_build',round(time.time()-T0,1),flush=True); rocks() if not os.environ.get('AMX_NOROCK') else None; print('t_rocks',round(time.time()-T0,1),flush=True); (dust() if not os.environ.get('AMX_NODUST') else None); print('t_dust',round(time.time()-T0,1),flush=True)
+sc.cycles.volume_bounces=int(os.environ.get('AMX_VB','3')); sc.cycles.volume_step_rate=float(os.environ.get('AMX_VS','2.0')); sc.cycles.volume_preview_step_rate=sc.cycles.volume_step_rate; sc.cycles.volume_max_steps=int(os.environ.get('AMX_VM','64'))
+sc.render.filepath=out; bpy.ops.render.render(write_still=True); print('rendered',out,'frame',fi,'t',round(time.time()-T0,1))

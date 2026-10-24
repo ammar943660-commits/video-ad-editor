@@ -7,5 +7,6 @@ for i in [int(x) for x in sys.argv[4:]]:
     o=p+nn*0.9; o=255*(1-np.exp(-o/255*1.0)) if False else np.clip(o,0,255)
     b=cv2.imread(f'{R}/{i+1:04d}.png',-1)
     if b is not None:
+        if b.shape[:2]!=p.shape[:2]: b=cv2.resize(b,(p.shape[1],p.shape[0]),interpolation=cv2.INTER_CUBIC)
         al=b[:,:,3:4].astype(np.float32)/255; o=o*(1-al)+b[:,:,:3].astype(np.float32)*al
     cv2.imwrite(f'{O}/{i+1:04d}.png',np.clip(o,0,255).astype(np.uint8))

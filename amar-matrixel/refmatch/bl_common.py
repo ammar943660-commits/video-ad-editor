@@ -112,3 +112,28 @@ def parts_object(parts, depth=1.5, bevel=0.06, name='PART', bevel_seg=3):
             sp=cu.splines.new('POLY'); sp.points.add(len(ring)-1); sp.use_cyclic_u=True
             for pt,(x,y) in zip(sp.points,ring): pt.co=(x,y,0,1)
     ob=bpy.data.objects.new(name,cu); bpy.context.scene.collection.objects.link(ob); return ob
+
+def dust_field(puffs, color=(1.0,0.96,0.9), noise_scale=1.5, detail=5.0, domain=((-90,-110,0),(90,60,40)), name='DUSTFIELD', gain=1.0, lo=0.42, hi=0.66):
+    """حقل غبار واحد: كل الكرات (x,y,z,r,dens) تُجمَّع في تدرّج كثافة داخل كائن حجم واحد (بدل كائن لكل سحابة: كلفة Cycles ≈1.7ث/كائن حجمي ثابتة).
+    كثافة = Σ(كثافة_i × سقوط شعاعي_i) × تحويل ضوضاء 3D (عالمية) ؛ يتطلب كائناً بإحداثيات عالم (تحويل الهوية)."""
+    m=bpy.data.materials.new(name); m.use_nodes=True; nt=m.node_tree; nt.nodes.clear(); L=nt.links
+    out=nt.nodes.new('ShaderNodeOutputMaterial'); vs=nt.nodes.new('ShaderNodeVolumeScatter'); ab=nt.nodes.new('ShaderNodeVolumeAbsorption'); ad=nt.nodes.new('ShaderNodeAddShader')
+    geo=nt.nodes.new('ShaderNodeNewGeometry'); n1=nt.nodes.new('ShaderNodeTexNoise'); n1.noise_dimensions='3D'; n1.inputs['Scale'].default_value=noise_scale; n1.inputs['Detail'].default_value=detail; n1.inputs['Roughness'].default_value=0.62
+    L.new(geo.outputs['Position'],n1.inputs['Vector'])
+    nmap=nt.nodes.new('ShaderNodeMapRange'); nmap.inputs[1].default_value=lo; nmap.inputs[2].default_value=hi; nmap.inputs[3].default_value=0.0; nmap.inputs[4].default_value=1.0; nmap.clamp=True; L.new(n1.outputs['Fac'],nmap.inputs['Value'])
+    acc=None
+    for (x,y,z,r,d) in puffs:
+        sub=nt.nodes.new('ShaderNodeVectorMath'); sub.operation='SUBTRACT'; sub.inputs[1].default_value=(x,y,z); L.new(geo.outputs['Position'],sub.inputs[0])
+        ln=nt.nodes.new('ShaderNodeVectorMath'); ln.operation='LENGTH'; L.new(sub.outputs['Vector'],ln.inputs[0])
+        mr=nt.nodes.new('ShaderNodeMapRange'); mr.inputs[1].default_value=0.0; mr.inputs[2].default_value=r; mr.inputs[3].default_value=d; mr.inputs[4].default_value=0.0; mr.clamp=True; L.new(ln.outputs['Value'],mr.inputs['Value'])
+        if acc is None: acc=mr.outputs['Result']
+        else:
+            ad_=nt.nodes.new('ShaderNodeMath'); ad_.operation='ADD'; L.new(acc,ad_.inputs[0]); L.new(mr.outputs['Result'],ad_.inputs[1]); acc=ad_.outputs['Value']
+    mul=nt.nodes.new('ShaderNodeMath'); mul.operation='MULTIPLY'; L.new(acc,mul.inputs[0]); L.new(nmap.outputs['Result'],mul.inputs[1])
+    dens=nt.nodes.new('ShaderNodeMath'); dens.operation='MULTIPLY'; dens.inputs[1].default_value=gain; L.new(mul.outputs['Value'],dens.inputs[0])
+    for n in (vs,ab): L.new(dens.outputs['Value'],n.inputs['Density'])
+    vs.inputs['Color'].default_value=tuple(color)+(1,); ab.inputs['Color'].default_value=(color[0]*0.8,color[1]*0.78,color[2]*0.74,1); vs.inputs['Anisotropy'].default_value=0.2
+    L.new(vs.outputs['Volume'],ad.inputs[0]); L.new(ab.outputs['Volume'],ad.inputs[1]); L.new(ad.outputs['Shader'],out.inputs['Volume'])
+    (x0,y0,z0),(x1,y1,z1)=domain
+    me=bpy.data.meshes.new(name); vs_=[(x,y,z) for x in (x0,x1) for y in (y0,y1) for z in (z0,z1)]; fs=[(0,1,3,2),(4,6,7,5),(0,4,5,1),(2,3,7,6),(0,2,6,4),(1,5,7,3)]; me.from_pydata(vs_,[],fs); me.update()
+    ob=bpy.data.objects.new(name,me); bpy.context.scene.collection.objects.link(ob); ob.data.materials.append(m); return ob
