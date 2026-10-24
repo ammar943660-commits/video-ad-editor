@@ -107,15 +107,19 @@ R5CFG=<work>/r5_cfg_newprop.json /tmp/bpyenv/bin/python amar-matrixel/refmatch/r
 - **الوسم المحلي:** `amar-matrixel-final-2026-10-24`.
 - **السابقة:** `pre-fix-round2`، `pre-visual-match-phase`، `pre-matrixel-backup`، و`_backup/*.bundle`.
 
-## 9) التثبيت على الماك (خطة آمنة — لم يُنفَّذ، ولم يُتحقَّق منه بعد)
-1. **نسخة احتياطية من النسخة الحالية قبل أي شيء:**
-   `cp -R ~/.claude/skills ~/AMAR_BACKUP_skills_$(date +%Y%m%d)`، وإن كانت كـplugin فمجلدها `~/.claude/plugins/…`.
-2. **استنساخ منفصل** لا يلمس النسخة المنصّبة:
-   `git clone -b claude/matrixel-visual-reconstruction-ksc576 https://github.com/ammar943660-commits/video-ad-editor ~/AMAR_video-ad-editor_final`
-3. **تحقّق:**
-   `grep -l production-policy ~/AMAR_video-ad-editor_final/*/SKILL.md | wc -l` يجب أن يطبع `7`.
-4. **التفعيل (بموافقة المستخدم):** ربط السكلات من الاستنساخ الجديد بدل القديمة. القديمة تبقى في النسخة الاحتياطية، والرجوع يتم بإعادة المجلد المحفوظ.
-5. **ممنوع:** لا `00_setup.sh --update`، ولا تحديث plugin من `majedphotos`.
+## 9) التثبيت على الماك (سكربتات جاهزة في `amar-matrixel/mac/` — لم تُشغَّل على الماك بعد)
+1. **استنساخ منفصل** لا يلمس أي شيء منصّب:
+   `git clone -b claude/matrixel-visual-reconstruction-ksc576 https://github.com/ammar943660-commits/video-ad-editor ~/AMAR/video-ad-editor_4215ca7`
+2. **الفحص + النسخة الاحتياطية + الاختبارات** (قراءة فقط):
+   `bash ~/AMAR/video-ad-editor_4215ca7/amar-matrixel/mac/preflight.sh`
+   - يكتب تقريراً في `~/AMAR/reports/`، ونسخة احتياطية في `~/AMAR_BACKUPS/<ts>/`.
+   - يتحقق أن المحتوى هو النسخة المعتمدة 4215ca7. أي فرق بعدها محصور في ملفات التثبيت.
+3. **عرض التفعيل بلا تنفيذ:** `bash …/amar-matrixel/mac/activate.sh`.
+4. **التفعيل بعد موافقة المستخدم فقط:** `bash …/amar-matrixel/mac/activate.sh --apply`.
+   - السكلات الحالية تُنقل ولا تُحذف، ثم تُربط بالنسخة الجديدة برابط رمزي.
+   - plugin `majed-video` يُعطَّل فقط ولا يُلغى تثبيته.
+5. **الرجوع:** `bash …/amar-matrixel/mac/rollback.sh ~/AMAR_BACKUPS/activate_<ts>`.
+6. **ممنوع:** لا `00_setup.sh --update`، ولا تحديث plugin من `majedphotos`.
 
 ## 10) الخطوة التالية عند بدء مشروع جديد
 1. اقرأ هذا الملف + `production-policy.md` + `USAGE.md` للمؤثر المطلوب.
