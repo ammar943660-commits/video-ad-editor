@@ -9,4 +9,9 @@ for i in [int(x) for x in sys.argv[4:]]:
     if b is not None:
         if b.shape[:2]!=p.shape[:2]: b=cv2.resize(b,(p.shape[1],p.shape[0]),interpolation=cv2.INTER_CUBIC)
         al=b[:,:,3:4].astype(np.float32)/255; o=o*(1-al)+b[:,:,:3].astype(np.float32)*al
+    nd=os.environ.get('ND_DIR')
+    if nd and os.path.exists(f'{nd}/{i+1:04d}.png'):   # طبقة بلا غبار فوق الغبار: النص يبقى مقروءاً (كالمرجع)
+        t=cv2.imread(f'{nd}/{i+1:04d}.png',-1)
+        if t.shape[:2]!=o.shape[:2]: t=cv2.resize(t,(o.shape[1],o.shape[0]),interpolation=cv2.INTER_CUBIC)
+        k=float(os.environ.get('ND_MIX','0.75')); a=t[:,:,3:4].astype(np.float32)/255*k; o=o*(1-a)+t[:,:,:3].astype(np.float32)*a
     cv2.imwrite(f'{O}/{i+1:04d}.png',np.clip(o,0,255).astype(np.uint8))
