@@ -19,3 +19,7 @@ projects/*/*/export/
 previews/camera/_*
 refmatch/fonts_tmp/
 refmatch/*/ae_export/plates/
+# النسخ النهائية المعتمدة ومعاينات/نتائج refmatch — تُحفظ دائماً (تتجاوز *.mp4 العامة)
+!refmatch/final/*.mp4
+!refmatch/previews/*.mp4
+!refmatch/ai_test_r3/results/*.mp4
