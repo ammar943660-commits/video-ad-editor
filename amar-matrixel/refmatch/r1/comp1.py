@@ -7,8 +7,9 @@ os.makedirs(O,exist_ok=True); H=np.load(f'{W}/H_r1.npy'); D=os.path.dirname(os.p
 rows=[]
 for i in fs:
     p=cv2.imread(f'{W}/plate/{i+1:04d}.png').astype(np.float32)
-    rf=cv2.imread(f'{W}/frames/{i+1:04d}.png').astype(np.float32); reg=(slice(100,250),slice(0,300))   # تصحيح لوني متبقٍّ من المرجع (مبانٍ بلا مؤثرات)
-    g=np.median(rf[reg].reshape(-1,3),0)/np.maximum(np.median(p[reg].reshape(-1,3),0),1); p=p*np.clip(g,0.8,1.4)
+    gi=i if not (262<=i<298) else 261
+    rf=cv2.imread(f'{W}/frames/{gi+1:04d}.png').astype(np.float32); reg=(slice(100,250),slice(0,300))   # تصحيح لوني متبقٍّ من المرجع (مبانٍ بلا مؤثرات)
+    g=np.median(rf[reg].reshape(-1,3),0)/np.maximum(np.median(p[reg].reshape(-1,3),0),1); p0=cv2.imread(f'{W}/plate/{gi+1:04d}.png').astype(np.float32); g=np.median(rf[reg].reshape(-1,3),0)/np.maximum(np.median(p0[reg].reshape(-1,3),0),1); p=p*np.clip(g,0.8,1.4)
     b=cv2.imread(f'{LD}/{i+1:04d}.png',-1)
     if b is not None:
         if b.shape[:2]!=p.shape[:2]: b=cv2.resize(b,(p.shape[1],p.shape[0]),interpolation=cv2.INTER_CUBIC)
@@ -20,7 +21,7 @@ for i in fs:
         for k in range(60):
             a0=rnd.uniform(0,360); sweep=rnd.uniform(20,70); jit=rnd.uniform(0.85,1.15)
             cv2.ellipse(L,(int(cx),int(cy)),(int(rx*jit),int(ry*jit)),0,a0,a0+sweep,float(rnd.uniform(0.3,1)),2,cv2.LINE_AA)
-        L*=math.sin(math.pi*u)**0.7; g=cv2.GaussianBlur(L,(0,0),3)*1.5+cv2.GaussianBlur(L,(0,0),12)*1.2
+        L*=math.sin(math.pi*u)**0.7; g=cv2.GaussianBlur(L,(0,0),2)*0.9+cv2.GaussianBlur(L,(0,0),10)*0.35
         p=p+np.stack([g*60,g*170,g*255],2)
     o=np.clip(p,0,255).astype(np.uint8); cv2.imwrite(f'{O}/{i+1:04d}.png',o)
     if cmp_:

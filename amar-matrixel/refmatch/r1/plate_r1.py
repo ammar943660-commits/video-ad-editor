@@ -16,7 +16,8 @@ for i in range(n):
             co,*_=np.linalg.lstsq(A,y,rcond=None); r=np.abs(A@co-y); k=r<np.percentile(r,75); A,y=A[k],y[k]
         co_.append(co)
     P.append(np.array(co_).ravel())
-P=gaussian_filter1d(np.array(P),3,axis=0,mode='nearest')
+P=np.array(P); P[262:298]=P[261]   # حلقة الختام تلوّث مناطق القياس: تثبيت التدريج
+P=gaussian_filter1d(P,3,axis=0,mode='nearest')
 for i in range(n):
     C=raw[i].astype(np.float32)/255+1e-3; o=np.stack([np.exp(P[i,2*c]+P[i,2*c+1]*np.log(C[:,:,c])) for c in range(3)],2)
     cv2.imwrite(f'{O}/{i+1:04d}.png',(np.clip(o-1e-3,0,1)*255).astype(np.uint8))
